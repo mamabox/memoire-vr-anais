@@ -9,7 +9,7 @@ public class FirstPersonLook : MonoBehaviour
     public float sensitivity = 2;
     public float smoothing = 1.5f;
 
-    Vector2 velocity;
+    public Vector2 velocity; // (FMD)
     Vector2 frameVelocity;
 
     private PlayerController playerController;

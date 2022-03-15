@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> cardDir;
     public List<GameObject> POI;
 
+    public List<string> POINames;
+
     private PlayerController playerController;
     private GameObject player;
 
@@ -20,6 +22,9 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        task1 = GameObject.Find("TaskManager").GetComponent<Task1Manager>();
+        //task2 = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<Task2Manager>();
+        //task3 = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<Task3Manager>();
         player = playerController.player;
         taskNb = 1; // The first task is task #1
 
@@ -29,7 +34,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerController.GotoHotspot(cardDir[0]);
+        
     
         //playerController.GotoCoord(cardDir[0].GetComponent<Hotspot>().coord);
     }
