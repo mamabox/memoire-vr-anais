@@ -11216,6 +11216,12 @@ Transform:
   m_Father: {fileID: 267090810}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &329364683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5242010300582068122, guid: f2e0b7ae4dae8cf44955bccd3512b213,
+    type: 3}
+  m_PrefabInstance: {fileID: 7027879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330934255
 GameObject:
   m_ObjectHideFlags: 0
@@ -16258,6 +16264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: desc
       value: Ouest
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156930094948566906, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
+        type: 3}
+      propertyPath: orientation
+      value: E
       objectReference: {fileID: 0}
     - target: {fileID: 8088634085722723696, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
         type: 3}
@@ -36014,7 +36025,9 @@ MonoBehaviour:
   walkSpeed: 0
   runSpeed: 0
   lookSpeed: 0
+  startOrientation: 0
   player: {fileID: 185426568}
+  player2: {fileID: 329364683}
 --- !u!1 &1112335317
 GameObject:
   m_ObjectHideFlags: 0
@@ -42903,6 +42916,11 @@ PrefabInstance:
       propertyPath: desc
       value: Centre
       objectReference: {fileID: 0}
+    - target: {fileID: 5156930094948566906, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
+        type: 3}
+      propertyPath: orientation
+      value: S
+      objectReference: {fileID: 0}
     - target: {fileID: 8088634085722723696, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
         type: 3}
       propertyPath: m_Name
@@ -44488,6 +44506,11 @@ PrefabInstance:
         type: 3}
       propertyPath: desc
       value: Sud
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156930094948566906, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
+        type: 3}
+      propertyPath: orientation
+      value: N
       objectReference: {fileID: 0}
     - target: {fileID: 8088634085722723696, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
         type: 3}
@@ -60203,6 +60226,11 @@ PrefabInstance:
       propertyPath: desc
       value: Est
       objectReference: {fileID: 0}
+    - target: {fileID: 5156930094948566906, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
+        type: 3}
+      propertyPath: orientation
+      value: O
+      objectReference: {fileID: 0}
     - target: {fileID: 8088634085722723696, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
         type: 3}
       propertyPath: m_Name
@@ -66441,6 +66469,11 @@ PrefabInstance:
         type: 3}
       propertyPath: desc
       value: Nord
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156930094948566906, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
+        type: 3}
+      propertyPath: orientation
+      value: S
       objectReference: {fileID: 0}
     - target: {fileID: 8088634085722723696, guid: 3a4989f3b4ae9486380a9ca024e8e31c,
         type: 3}

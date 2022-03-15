@@ -15,18 +15,22 @@ public class GameManager : MonoBehaviour
     {
         playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
         player = playerController.player;
+
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
-        playerController.GotoCoord(cardDir[0].GetComponent<Hotspot>().coord);
+        playerController.GotoHotspot(cardDir[0]);
+    
+        //playerController.GotoCoord(cardDir[0].GetComponent<Hotspot>().coord);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Test()
     {
-        
+        playerController.GotoHotspot(cardDir[0]);
+
     }
 }

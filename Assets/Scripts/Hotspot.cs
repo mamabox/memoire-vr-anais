@@ -8,6 +8,7 @@ public class Hotspot: MonoBehaviour
     public string article;
     public string desc;
     public List<float> coord;   // the hotspot's X and Z coordinates
+    public string orientation;  // in what cardinal direction to orient the player if are moved to this hotspot
 
     // Start is called before the first frame update
     void Awake()

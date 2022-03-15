@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+/** Added line 32 (FMD) **/
+
 public class FirstPersonLook : MonoBehaviour
 {
     [SerializeField]
@@ -10,6 +12,12 @@ public class FirstPersonLook : MonoBehaviour
     Vector2 velocity;
     Vector2 frameVelocity;
 
+    private PlayerController playerController;
+
+    private void Awake()
+    {
+        playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+    }
 
     void Reset()
     {
@@ -21,6 +29,7 @@ public class FirstPersonLook : MonoBehaviour
     {
         // Lock the mouse cursor to the game screen.
         Cursor.lockState = CursorLockMode.Locked;
+        velocity.x = playerController.startOrientation; // Initialise player to start orientation set for Task 1 in PlayerController.Awake() (FMD)
     }
 
     void Update()
@@ -35,5 +44,6 @@ public class FirstPersonLook : MonoBehaviour
         // Rotate camera up-down and controller left-right from velocity.
         transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
         character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
+        Debug.Log("FirstPersonLook() > Update: transform rotation = " + -velocity.x);
     }
 }
