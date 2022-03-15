@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float lookSpeed; // Player's turning speed
     private float newOrientation;
     public float startOrientation; // Player's start orientation
+    private GameManager gameManager;
 
     private List<string> validOrientation = new List<string> { "N", "NE", "E", "SE", "S", "SO", "O", "NO" }; //List of valid orientations
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
         // Read player's  sp
         SetStartOrientation("S"); //Set the player's start direction for Task 1
     }
@@ -30,7 +32,29 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // KEYBOARD AND JOYSTICK INPUT
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log("Keyboard press X");
+            gameManager.OnValidation();
+        }
+        if (Input.GetKeyDown("joystick button 0"))
+        {
+            Debug.Log("Joystick 0 - A");
+        }
+        if (Input.GetKeyDown("joystick button 1"))
+        {
+            Debug.Log("Joystick 1 - B");
+        }
+        if (Input.GetKeyDown("joystick button 2"))
+        {
+            Debug.Log("Joystick 2 - Y");
+        }
+        if (Input.GetKeyDown("joystick button 3"))
+        {
+            Debug.Log("Joystick 3 - X");
+            gameManager.OnValidation();
+        }
     }
 
     public void SetStartOrientation(string carDir)

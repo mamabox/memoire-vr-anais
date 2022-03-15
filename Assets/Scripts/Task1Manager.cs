@@ -29,4 +29,9 @@ public class Task1Manager : MonoBehaviour
     {
 
     }
+
+    public void OnValidation()
+    {
+
+    }
 }

@@ -10,11 +10,18 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     private GameObject player;
 
+    private Task1Manager task1;
+    //private Task2Manager task2;
+    //private Task3Manager task3;
+
+    public int taskNb;
+
 
     private void Awake()
     {
         playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
         player = playerController.player;
+        taskNb = 1; // The first task is task #1
 
 
     }
@@ -32,5 +39,12 @@ public class GameManager : MonoBehaviour
     {
         playerController.GotoHotspot(cardDir[0]);
 
+    }
+
+    public void OnValidation()
+    {
+        if (taskNb == 1)
+            task1.OnValidation();
+            
     }
 }

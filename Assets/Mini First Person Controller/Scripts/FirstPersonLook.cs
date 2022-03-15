@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-/** Added line 32 (FMD) **/
+/** Added line 32 and 47 (FMD) **/
 
 public class FirstPersonLook : MonoBehaviour
 {
@@ -44,6 +44,6 @@ public class FirstPersonLook : MonoBehaviour
         // Rotate camera up-down and controller left-right from velocity.
         transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
         character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
-        Debug.Log("FirstPersonLook() > Update: transform rotation = " + -velocity.x);
+        //Debug.Log("FirstPersonLook() > Update: transform rotation = " + -velocity.x); // (FMD)
     }
 }
