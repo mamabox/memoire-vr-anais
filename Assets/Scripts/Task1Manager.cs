@@ -11,28 +11,32 @@ public class Task1Manager : MonoBehaviour
     private float angleToTarget;
     private float angleToValidate;
 
-    private GameManager gameManager;
+    private GameManager gameMngr;
     private GameObject targetObj;
-    private PlayerController playerController;
-    private GameObject startHotspot;
+    private PlayerController playerCtrlr;
+    private GameObject startHotspot;    // Where the player starts at the beginning of the trial
+    private RouteManager routeMngr;
 
     private int targetObjIndex;
     private int trialNb;
     private int maxTrial;
     private int maxTargetObj;
 
+    private List<string> routeN = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
+    private List<Hotspot> routeNObj;
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
-        playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        gameMngr = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        playerCtrlr = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        routeMngr = GameObject.Find("RouteManager").GetComponent<RouteManager>();
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        SetupTask();
+        
     }
 
     // Update is called once per frame
@@ -42,12 +46,13 @@ public class Task1Manager : MonoBehaviour
     }
 
     // Configure settings for this task
-    void SetupTask()
+    public void SetupTask()
     {
         trialNb = 0;
         maxTrial = 4;
         maxTargetObj = 6;
         StartTrial();
+        routeMngr.SpawnLine(routeN, 1);
 
     }
 
@@ -60,8 +65,8 @@ public class Task1Manager : MonoBehaviour
             //TODO: Make visor visible
             Debug.Log("Task 1 - Trial #: " + trialNb + " / " + maxTrial);
             targetObjIndex = 0; //Set the target object to the first POI
-            startHotspot = gameManager.cardDir[trialNb-1];
-            playerController.GotoHotspot(startHotspot);
+            startHotspot = gameMngr.cardDir[trialNb-1];
+            playerCtrlr.GotoHotspot(startHotspot);
             SetTargetObj();
         }
         else // notrials left
@@ -74,7 +79,7 @@ public class Task1Manager : MonoBehaviour
     void SetTargetObj()
     {
         Debug.Log("TargetObj() index: " + (targetObjIndex +1) + " / " + maxTargetObj);
-        targetObj = gameManager.POI[targetObjIndex];
+        targetObj = gameMngr.POI[targetObjIndex];
         
     }
 
@@ -88,7 +93,7 @@ public class Task1Manager : MonoBehaviour
     {
         if (true)//TODO: Check if pointing to target obj
         {
-            Debug.Log("Inside Task1 OnValidation()");
+            //Debug.Log("Inside Task1 OnValidation()");
             if (targetObjIndex < maxTargetObj-1) // if there are target objects left in this trial
             {
                 targetObjIndex++;

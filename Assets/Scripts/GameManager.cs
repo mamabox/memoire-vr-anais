@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> cardDir;
     public List<GameObject> POI;
+    public GameObject routeHotspotsParent;
+    public List<GameObject> routeHotspots;
 
     public List<string> POINames;
 
@@ -28,13 +30,17 @@ public class GameManager : MonoBehaviour
         player = playerController.player;
         taskNb = 1; // The first task is task #1
 
+        foreach (Transform child in routeHotspotsParent.transform) // for each route hotspot
+        {
+            routeHotspots.Add(child.gameObject);
+        }
 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        task1.SetupTask();
     
         //playerController.GotoCoord(cardDir[0].GetComponent<Hotspot>().coord);
     }
@@ -51,5 +57,17 @@ public class GameManager : MonoBehaviour
         if (taskNb == 1)
             task1.OnValidation();
             
+    }
+
+    public int ReturnHotspotIndex(string name)
+    {
+
+        for (int x = 0; x < routeHotspots.Count; x++) // for each route hotspot
+        {
+            if (name == routeHotspots[x].GetComponent<Hotspot>().ID)
+                return x;
+        }
+
+        return -1;
     }
 }

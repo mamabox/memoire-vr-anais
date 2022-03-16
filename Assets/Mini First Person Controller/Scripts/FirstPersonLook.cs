@@ -29,7 +29,7 @@ public class FirstPersonLook : MonoBehaviour
     {
         // Lock the mouse cursor to the game screen.
         Cursor.lockState = CursorLockMode.Locked;
-        velocity.x = playerController.startOrientation; // Initialise player to start orientation set for Task 1 in PlayerController.Awake() (FMD)
+        //velocity.x = playerController.startOrientation; // Initialise player to start orientation set for Task 1 in PlayerController.Awake() (FMD)
     }
 
     void Update()

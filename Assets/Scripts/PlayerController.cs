@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private List<string> validOrientation = new List<string> { "N", "NE", "E", "SE", "S", "SO", "O", "NO" }; //List of valid orientations
 
     public GameObject player; // Player object
-    public GameObject player2;
+    public GameObject playerCam;
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         // KEYBOARD AND JOYSTICK INPUT
         if (Input.GetKeyDown(KeyCode.X))
         {
-            Debug.Log("Keyboard press X");
+            //Debug.Log("Keyboard press X");
             gameManager.OnValidation();
         }
         if (Input.GetKeyDown("joystick button 0"))
@@ -73,8 +73,9 @@ public class PlayerController : MonoBehaviour
         player.transform.position = new Vector3(_coord[0], 1, _coord[1]);   // Move player to the hotspot's coordinate
 
         Debug.Log("New Y rotation is " + _newOrientation);
-        player.transform.eulerAngles = new Vector3(0, _newOrientation, 0);
+        //player.transform.eulerAngles = new Vector3(0, _newOrientation, 0);
         //player2.transform.eulerAngles = new Vector3(0, newOrientation.y, 0);
+        playerCam.GetComponent<FirstPersonLook>().velocity.x = _newOrientation;
     }
 
     public float GetOrientationAngle(string carDir)
@@ -99,13 +100,13 @@ public class PlayerController : MonoBehaviour
                 case "S":
                     newOrientation = 180;
                     break;
-                case "SW":
+                case "SO":
                     newOrientation = 225;
                     break;
-                case "W":
+                case "O":
                     newOrientation = 270;
                     break;
-                case "NW":
+                case "NO":
                     newOrientation = 315;
                     break;
             }
