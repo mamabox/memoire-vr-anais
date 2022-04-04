@@ -18,6 +18,7 @@ public class Task1Manager : MonoBehaviour
     private PlayerController playerCtrlr;
     private GameObject startHotspot;    // Where the player starts at the beginning of the trial
     private RouteManager routeMngr;
+    private DialogBox dialogBox;
 
     //public TextMeshProUGUI TaskText;
     public TextMeshProUGUI TrialText;
@@ -42,13 +43,14 @@ public class Task1Manager : MonoBehaviour
         gameMngr = FindObjectOfType<GameManager>().GetComponent<GameManager>();
         playerCtrlr = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
         routeMngr = GameObject.Find("RouteManager").GetComponent<RouteManager>();
+        dialogBox = FindObjectOfType<GameManager>().dialogBox.GetComponent<DialogBox>();
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        dialogBox.OpenDialogBox("this is a test", "none");
     }
 
     // Update is called once per frame

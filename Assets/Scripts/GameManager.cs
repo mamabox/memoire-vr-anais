@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerController playerController;
     private GameObject player;
+    public GameObject dialogBox;
 
     private Task1Manager task1;
     //private Task2Manager task2;
