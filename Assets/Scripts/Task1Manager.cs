@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 /* 4 trials: start at N,E, S, W */
 
 public class Task1Manager : MonoBehaviour
 {
-    private float angleErrorMargin;  //how mau
-    private float angleToTarget;
+    private float angleErrorMargin;  //how many degrees the player can be off for validation
+    private float angleToTarget;    //Correct angle to target
     private float angleToValidate;
+    private float playerAngle;
 
     private GameManager gameMngr;
     private GameObject targetObj;
@@ -17,12 +19,22 @@ public class Task1Manager : MonoBehaviour
     private GameObject startHotspot;    // Where the player starts at the beginning of the trial
     private RouteManager routeMngr;
 
+    //public TextMeshProUGUI TaskText;
+    public TextMeshProUGUI TrialText;
+    public TextMeshProUGUI TargetText;
+    public TextMeshProUGUI AngleToTargetText;
+
     private int targetObjIndex;
     private int trialNb;
     private int maxTrial;
     private int maxTargetObj;
 
+    private List<string> trialStart = new List<string> { "N", "E", "S", "W" };
     private List<string> routeN = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
+    private List<string> routeE = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
+    private List<string> routeS = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
+    private List<string> routeW = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
+
     private List<Hotspot> routeNObj;
 
     private void Awake()
@@ -43,6 +55,13 @@ public class Task1Manager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void updateUI()
+    {
+        TrialText.text = "Trial: " + trialNb + " / " + maxTrial;
+        TargetText.text = "Target: " + (targetObjIndex + 1) + " / " + maxTargetObj;
+        AngleToTargetText.text = "AngleToTarget: " + angleToTarget;
     }
 
     // Configure settings for this task
