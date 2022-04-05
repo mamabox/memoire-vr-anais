@@ -50,7 +50,7 @@ public class Task1Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dialogBox.OpenDialogBox("this is a test", "none");
+
     }
 
     // Update is called once per frame
@@ -74,12 +74,15 @@ public class Task1Manager : MonoBehaviour
         maxTargetObj = 6;
         StartTrial();
         routeMngr.SpawnLine(routeN, 1);
+        //gameMngr.dialogBox.SetActive(true);
+        dialogBox.OpenDialogBoxImg("First instructions", "none");
 
     }
 
     // Begin the task
     void StartTrial()
     {
+                dialogBox.OpenDialogBoxImg("this is a test", "none");
         if (trialNb < maxTrial)    //if there are trials left
         {
             trialNb++;

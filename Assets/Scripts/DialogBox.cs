@@ -10,6 +10,7 @@ public class DialogBox : MonoBehaviour
 {
 
     private GameManager gameManager;
+    public TextMeshProUGUI instructionsImg;
     public TextMeshProUGUI instructions;
     public Button dialogBoxBtn;
     public RawImage image;
@@ -36,17 +37,25 @@ public class DialogBox : MonoBehaviour
         
     }
 
-    public void OpenDialogBox(string text, string image)
+    public void OpenDialogBox(string text)
     {
-        Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
-        string fileName = image + ".png";
+        this.gameObject.SetActive(true);
+        Debug.Log("Open a dialog box with text: " + text);
+        instructionsImg.gameObject.SetActive(false);
+        instructions.gameObject.SetActive(true);
         instructions.text = text;
-        addTexture(fileName);   // Add the image to dialog box
     }
 
-    public void OnButtonClick()
+    public void OpenDialogBoxImg(string text, string image)
     {
-
+        this.gameObject.SetActive(true);
+        Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
+        instructionsImg.gameObject.SetActive(true);
+        instructions.gameObject.SetActive(false);
+        string fileName = image + ".png";
+        Debug.Log("Filename: " + fileName);
+        instructions.text = text;
+        addTexture(fileName);   // Add the image to dialog box
     }
 
     void addTexture(string fileName)

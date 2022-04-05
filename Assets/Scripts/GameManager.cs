@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     private GameObject player;
     public GameObject dialogBox;
+    public GameObject debugUI;
+    public GameObject menuUI;
 
     private Task1Manager task1;
     //private Task2Manager task2;
@@ -36,6 +38,15 @@ public class GameManager : MonoBehaviour
             routeHotspots.Add(child.gameObject);
         }
 
+        HideUI();
+    }
+
+    //Hide UI elements
+    private void HideUI() {
+        Debug.Log("Hide UI");
+        dialogBox.SetActive(false);
+        debugUI.SetActive(false);
+        menuUI.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -51,6 +62,11 @@ public class GameManager : MonoBehaviour
     {
         playerController.GotoHotspot(cardDir[0]);
 
+    }
+
+    public void CloseDialogBox()
+    {
+        dialogBox.SetActive(false);
     }
 
     public void OnValidation()

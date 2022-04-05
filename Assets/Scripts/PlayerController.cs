@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private float newOrientation;
     public float startOrientation; // Player's start orientation
     private GameManager gameManager;
+    //private DialogBox dialogBox;
 
     private List<string> validOrientation = new List<string> { "N", "NE", "E", "SE", "S", "SO", "O", "NO" }; //List of valid orientations
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        //dialogBox = FindObjectOfType<GameManager>().GetComponent<DialogBox>();
         // Read player's  sp
         SetStartOrientation("S"); //Set the player's start direction for Task 1
     }
@@ -37,6 +39,24 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("Keyboard press X");
             gameManager.OnValidation();
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            gameManager.CloseDialogBox();
+        }
+        if (Input.GetKeyDown(KeyCode.D))    //Debug Menu toggle
+        {
+            if (gameManager.debugUI.activeInHierarchy)
+                gameManager.debugUI.SetActive(false);
+            else
+                gameManager.debugUI.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.M))    //Menu toggle
+        {
+            if (gameManager.menuUI.activeInHierarchy)
+                gameManager.menuUI.SetActive(false);
+            else
+                gameManager.menuUI.SetActive(true);
         }
         if (Input.GetKeyDown("joystick button 0"))
         {
