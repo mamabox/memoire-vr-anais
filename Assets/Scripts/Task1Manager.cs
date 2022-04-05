@@ -21,9 +21,12 @@ public class Task1Manager : MonoBehaviour
     private DialogBox dialogBox;
 
     //public TextMeshProUGUI TaskText;
-    public TextMeshProUGUI TrialText;
-    public TextMeshProUGUI TargetText;
-    public TextMeshProUGUI AngleToTargetText;
+    public TextMeshProUGUI trialText;
+    public TextMeshProUGUI targetText;
+    public TextMeshProUGUI angleToTargetText;
+    public TextMeshProUGUI playerRotation;
+
+
 
     private int targetObjIndex;
     private int trialNb;
@@ -48,9 +51,9 @@ public class Task1Manager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void StartTask()
     {
-
+        Debug.Log("TASK 1 START");
     }
 
     // Update is called once per frame
@@ -61,9 +64,10 @@ public class Task1Manager : MonoBehaviour
 
     private void updateUI()
     {
-        TrialText.text = "Trial: " + trialNb + " / " + maxTrial;
-        TargetText.text = "Target: " + (targetObjIndex + 1) + " / " + maxTargetObj;
-        AngleToTargetText.text = "AngleToTarget: " + angleToTarget;
+        trialText.text = "Trial: " + trialNb + " / " + maxTrial;
+        targetText.text = "Target: " + (targetObjIndex + 1) + " / " + maxTargetObj;
+        angleToTargetText.text = "AngleToTarget: " + angleToTarget;
+        
     }
 
     // Configure settings for this task
@@ -80,7 +84,7 @@ public class Task1Manager : MonoBehaviour
     }
 
     // Begin the task
-    void StartTrial()
+    public void StartTrial()
     {
                 dialogBox.OpenDialogBoxImg("this is a test", "none");
         if (trialNb < maxTrial)    //if there are trials left

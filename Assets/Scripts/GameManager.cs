@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,22 @@ public class GameManager : MonoBehaviour
     public GameObject dialogBox;
     public GameObject debugUI;
     public GameObject menuUI;
+
+    //UI Elements
+    public TextMeshProUGUI totalTimeTxt;
+    public TextMeshProUGUI taskTimeTxt;
+
+    //Time
+    private float startTime;
+    public float taskStartTime;
+    public float endTime;
+    private TimeSpan totalTime;
+    private TimeSpan taskTime;
+
+    private bool sessionStarted;
+    private bool sessionPaused;
+    private bool taskStarted;
+    private bool taskEnded;
 
     private Task1Manager task1;
     //private Task2Manager task2;
@@ -41,12 +59,31 @@ public class GameManager : MonoBehaviour
         HideUI();
     }
 
+
+    private void UIupdate()
+    {
+        taskTimeTxt.text = taskTime.ToString(@"mm\:ss");
+    }
+
     //Hide UI elements
     private void HideUI() {
         Debug.Log("Hide UI");
         dialogBox.SetActive(false);
         debugUI.SetActive(false);
         menuUI.SetActive(false);
+    }
+
+    public void StartSession()
+    {
+        sessionStarted = true;
+        startTime = Time.time;
+    }
+
+    public void EndTask()
+    {
+        endTime = Time.time;
+        taskEnded = true;
+        //TODO: Calculate end time
     }
 
     // Start is called before the first frame update
