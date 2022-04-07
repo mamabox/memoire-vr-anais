@@ -12,6 +12,7 @@ public class DialogBox : MonoBehaviour
     private GameManager gameManager;
     public TextMeshProUGUI instructionsImg;
     public TextMeshProUGUI instructions;
+    public GameObject instructionsWithImg;
     public Button dialogBoxBtn;
     public RawImage image;
     private string imagePath;
@@ -19,10 +20,13 @@ public class DialogBox : MonoBehaviour
     //private string fileName;
     private byte[] bytes;
 
+    private GameManager gameMngr;
+
 
     private void Awake()
     {
         imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/Media/Images/");
+        gameMngr = GameObject.FindObjectOfType<GameManager>().GetComponent<GameManager>();
     }
 
     // Start is called before the first frame update
@@ -37,11 +41,20 @@ public class DialogBox : MonoBehaviour
         
     }
 
+    public void ReadTaskInstructions()
+    {
+        if (!gameMngr.readTaskInstructions) // if the first instruction have not been read
+        {
+            gameMngr.readTaskInstructions = true;
+        }
+
+    } 
+
     public void OpenDialogBox(string text)
     {
         this.gameObject.SetActive(true);
         Debug.Log("Open a dialog box with text: " + text);
-        instructionsImg.gameObject.SetActive(false);
+        instructionsWithImg.SetActive(false);
         instructions.gameObject.SetActive(true);
         instructions.text = text;
     }
@@ -50,7 +63,7 @@ public class DialogBox : MonoBehaviour
     {
         this.gameObject.SetActive(true);
         Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
-        instructionsImg.gameObject.SetActive(true);
+        instructionsWithImg.SetActive(true);
         instructions.gameObject.SetActive(false);
         string fileName = image + ".png";
         Debug.Log("Filename: " + fileName);

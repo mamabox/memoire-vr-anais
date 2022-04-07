@@ -53,10 +53,11 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))    //Menu toggle
         {
-            if (gameManager.menuUI.activeInHierarchy)
-                gameManager.menuUI.SetActive(false);
-            else
-                gameManager.menuUI.SetActive(true);
+            gameManager.ExitTask();
+            //if (gameManager.menuUI.activeInHierarchy)
+            //    gameManager.menuUI.SetActive(false);
+            //else
+            //    gameManager.menuUI.SetActive(true);
         }
         if (Input.GetKeyDown("joystick button 0"))
         {
@@ -75,6 +76,15 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Joystick 3 - X");
             gameManager.OnValidation();
         }
+        // IF session started and paused.
+        if (!gameManager.taskStarted)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+
+            }
+        }
+
     }
 
     public void SetStartOrientation(string carDir)

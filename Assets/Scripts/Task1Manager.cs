@@ -21,23 +21,26 @@ public class Task1Manager : MonoBehaviour
     private DialogBox dialogBox;
 
     //public TextMeshProUGUI TaskText;
-    public TextMeshProUGUI trialText;
-    public TextMeshProUGUI targetText;
-    public TextMeshProUGUI angleToTargetText;
+    public GameObject task1UI;
+    public TextMeshProUGUI trialTxt;
+    public TextMeshProUGUI targetTxt;
+    public TextMeshProUGUI angleToTargetTxt;
     public TextMeshProUGUI playerRotation;
-
-
 
     private int targetObjIndex;
     private int trialNb;
     private int maxTrial;
     private int maxTargetObj;
 
+    
+
     private List<string> trialStart = new List<string> { "N", "E", "S", "W" };
     private List<string> routeN = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
     private List<string> routeE = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
     private List<string> routeS = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
     private List<string> routeW = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
+
+    private List<string> instructions = new List<string> { "« Vous allez parcourir cette ville à l’aide de flèches au sol. Vous verrez une image apparaître devant vous qui vous indiquera le lieu que vous allez rejoindre grâce aux flèches. Une fois que vous aurez atteint le premier lieu, vous cliquerez sur une pancarte et une nouvelle image de lieu apparaîtra. Vous rejoindrez ce lieu en suivant de nouvelles flèches. Vous allez faire cela pour 6 lieux différents. Une fois que vous aurez vu les 6 lieux, vous apparaîtrez à un nouveau point de la ville et vous recommencerez la même chose. La consigne vous sera rappelez. Lorsque vous suivrez les chemins, soyez attentif à votre environnement et regardez bien autour de vous. Pour début l’expérience, cliquer sur X ».", "Il faut rejoindre ce lieu", "Tâche terminée" };
 
     private List<Hotspot> routeNObj;
 
@@ -54,39 +57,49 @@ public class Task1Manager : MonoBehaviour
     public void StartTask()
     {
         Debug.Log("TASK 1 START");
+        //gameMngr.taskNb = 1;
+        //SetupTask();
+        StartTrial();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       if (gameMngr.taskStarted && gameMngr.taskNb == 1)    //Update UI
+        {
+            UpdateUI();
+        }
+
     }
 
-    private void updateUI()
+    private void UpdateUI()
     {
-        trialText.text = "Trial: " + trialNb + " / " + maxTrial;
-        targetText.text = "Target: " + (targetObjIndex + 1) + " / " + maxTargetObj;
-        angleToTargetText.text = "AngleToTarget: " + angleToTarget;
+        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial;
+        targetTxt.text = "Target: " + (targetObjIndex + 1) + " / " + maxTargetObj;
+        angleToTargetTxt.text = "AngleToTarget: " + angleToTarget;
         
     }
 
     // Configure settings for this task
     public void SetupTask()
     {
+        gameMngr.taskNb = 1;
         trialNb = 0;
         maxTrial = 4;
         maxTargetObj = 6;
-        StartTrial();
+        dialogBox.OpenDialogBox("First instructions");
         routeMngr.SpawnLine(routeN, 1);
+        task1UI.SetActive(true);
         //gameMngr.dialogBox.SetActive(true);
-        dialogBox.OpenDialogBoxImg("First instructions", "none");
+        
 
     }
 
     // Begin the task
     public void StartTrial()
     {
-                dialogBox.OpenDialogBoxImg("this is a test", "none");
+        //dialogBox.OpenDialogBoxImg("this is a test", "none");
         if (trialNb < maxTrial)    //if there are trials left
         {
             trialNb++;
@@ -113,7 +126,7 @@ public class Task1Manager : MonoBehaviour
 
     void EndTask()
     {
-
+        task1UI.SetActive(false);
         Debug.Log("End of task 1");
     }
 
