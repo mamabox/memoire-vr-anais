@@ -42,7 +42,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            gameManager.CloseDialogBox();
+
+            //playerCam.GetComponent<FirstPersonLook>().velocity.x = 90;
+            //gameManager.CloseDialogBox();
         }
         if (Input.GetKeyDown(KeyCode.D))    //Debug Menu toggle
         {
@@ -105,6 +107,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("New Y rotation is " + _newOrientation);
         //player.transform.eulerAngles = new Vector3(0, _newOrientation, 0);
         //player2.transform.eulerAngles = new Vector3(0, newOrientation.y, 0);
+        //player.transform.eulerAngles = new Vector3 (0, 180, 0);
         playerCam.GetComponent<FirstPersonLook>().velocity.x = _newOrientation;
     }
 

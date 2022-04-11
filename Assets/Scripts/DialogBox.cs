@@ -52,6 +52,7 @@ public class DialogBox : MonoBehaviour
 
     public void OpenDialogBox(string text)
     {
+
         this.gameObject.SetActive(true);
         //Debug.Log("Open a dialog box with text: " + text);
         instructionsWithImg.SetActive(false);
@@ -69,6 +70,16 @@ public class DialogBox : MonoBehaviour
         Debug.Log("Filename: " + fileName);
         instructions.text = text;
         addTexture(fileName);   // Add the image to dialog box
+    }
+
+    public void CloseDialogBox()
+    {
+        if (gameMngr.taskPaused)
+        {
+            gameMngr.StartTask();
+        }
+        else
+            gameMngr.StartTrial();
     }
 
     void addTexture(string fileName)

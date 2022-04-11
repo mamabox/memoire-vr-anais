@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerController playerController;
     private GameObject player;
+    private GameObject playerCam;
     public GameObject dialogBox;
     public GameObject debugUI;
     public GameObject menuUI;
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI taskNbTxt;
     public TextMeshProUGUI totalTimeTxt;
     public TextMeshProUGUI taskTimeTxt;
+    public TextMeshProUGUI playerPositionTxt;
+    public TextMeshProUGUI playerRotationTxt;
     public List<TextMeshProUGUI> TaskBtnLabels;
 
     //Time
@@ -39,8 +42,13 @@ public class GameManager : MonoBehaviour
     public bool taskPaused;
 
     public bool readTaskInstructions;
+    public bool readTrialInstructions;
 
     private Task1Manager task1;
+
+    //Player Data
+    public List<float> playerPos;
+    public List<float> playerRot;
     
     //private Task2Manager task2;
     //private Task3Manager task3;
@@ -61,6 +69,12 @@ public class GameManager : MonoBehaviour
         //task2 = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<Task2Manager>();
         //task3 = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<Task3Manager>();
         player = playerController.player;
+        playerCam = playerController.playerCam;
+
+        playerPos = new List<float> { 0,0};
+        playerRot = new List<float> { 0,0 };
+    
+
         taskNb = 0; // The first task is task #1
 
         foreach (Transform child in routeHotspotsParent.transform) // for each route hotspot
@@ -74,6 +88,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateClock();
+        UpdatePlayerCoord();
         UIupdate();
     }
 
@@ -90,12 +105,26 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void UpdatePlayerCoord()
+    {
+        playerPos[0] = player.transform.position.x;
+        playerPos[1] = player.transform.position.z;
+        if (playerCam.transform.rotation.eulerAngles.x > 180)
+            playerRot[1] = 360 - playerCam.transform.rotation.eulerAngles.x;
+        else
+            playerRot[1] = -playerCam.transform.rotation.eulerAngles.x;
+        playerRot[0] = player.transform.rotation.eulerAngles.y;
+    }
+
     // Manages the User interface not specific to tasks 
     private void UIupdate()
     {
         totalTimeTxt.text = totalTime.ToString(@"mm\:ss");
         taskTimeTxt.text = taskTime.ToString(@"mm\:ss");
         taskNbTxt.text = "Task " + taskNb;
+        playerPositionTxt.text = playerPos[0].ToString("F2") + " , " + playerPos[1].ToString("F2");
+        playerRotationTxt.text = playerRot[0].ToString("F2") + " , " + playerRot[1].ToString("F2");
+
     }
 
     //Hide UI elements
@@ -123,12 +152,14 @@ public class GameManager : MonoBehaviour
     
     public void StartTask()
     {
-        Debug.Log("Start task");
-        if (!taskStarted)   //if no task has started
+        
+        if (!taskStarted)   //if no task has started, start task
         {
+            Debug.Log("Start task");
             taskStarted = true;
             taskStartTime = Time.time;
-            Cursor.lockState = CursorLockMode.Locked;
+            taskPaused = true;
+            //Cursor.lockState = CursorLockMode.Locked;
             if (taskNb == 1)
             {
                 task1.StartTask();
@@ -137,6 +168,17 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Task 2 or 3 not defined");
             readTaskInstructions = false;
         }
+    }
+
+    public void StartTrial()
+    {
+
+        if (taskNb == 1)
+        {
+            task1.StartTrial();
+        }
+        else
+            Debug.Log("Task 2 or 3 not defined");
     }
 
     public void PauseTask()
@@ -182,10 +224,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Total task time: " + taskTime);
     }
 
-    public void CloseDialogBox()
-    {
-        dialogBox.SetActive(false);
-    }
 
     public void OnValidation()
     {

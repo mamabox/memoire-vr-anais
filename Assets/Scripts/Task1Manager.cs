@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using System;
 
 /* 4 trials: start at N,E, S, W */
 
 public class Task1Manager : MonoBehaviour
 {
-    private float angleErrorMargin;  //how many degrees the player can be off for validation
-    private float angleToTarget;    //Correct angle to target
-    private float angleToValidate;
-    private float playerAngle;
+    private float degreesToTarget;    //Correct angle to target
+    private float correctRotationToTarget;
+    private List<float> savedTrials = new List<float>();
+    private List<string> savedTrialsUI = new List<string>();
 
     private GameManager gameMngr;
-    private GameObject targetObj;
+    private GameObject targetLocation;
     private PlayerController playerCtrlr;
     private GameObject startHotspot;    // Where the player starts at the beginning of the trial
     private RouteManager routeMngr;
@@ -24,8 +25,11 @@ public class Task1Manager : MonoBehaviour
     public GameObject task1UI;
     public TextMeshProUGUI trialTxt;
     public TextMeshProUGUI targetTxt;
+    public TextMeshProUGUI rotToTargetTxt;
+    public TextMeshProUGUI playerRotationTxt;
     public TextMeshProUGUI angleToTargetTxt;
-    public TextMeshProUGUI playerRotation;
+    public TextMeshProUGUI savedTrialsTxt;
+    
 
     private int targetLocationIndex;
     private string targetLocationName;
@@ -59,7 +63,9 @@ public class Task1Manager : MonoBehaviour
         //gameMngr.taskNb = 1;
         //SetupTask();
         task1UI.SetActive(true);
-        StartTrial();
+        //StartTrial();
+        gameMngr.taskPaused = true;
+        dialogBox.OpenDialogBoxImg("this is a test", "none");
 
     }
 
@@ -69,6 +75,7 @@ public class Task1Manager : MonoBehaviour
        if (gameMngr.taskStarted && gameMngr.taskNb == 1)    //Update UI
         {
             UpdateUI();
+            degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
         }
 
     }
@@ -77,7 +84,11 @@ public class Task1Manager : MonoBehaviour
     {
         trialTxt.text = "Trial: " + trialNb + " / " + maxTrial + ": "+ routeName;
         targetTxt.text = "Target: " + targetNb + " / " + maxTargetObj + ": " + targetLocationName;
-        angleToTargetTxt.text = "AngleToTarget: " + angleToTarget;
+        //playerRotationTxt.text = "temp";
+        playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
+        rotToTargetTxt.text = "Rot to target: " + correctRotationToTarget.ToString("F2");
+        angleToTargetTxt.text = "Degrees to target: " + degreesToTarget.ToString("F2");
+        savedTrialsTxt.text = String.Join(",", savedTrialsUI);
         
     }
 
@@ -86,6 +97,7 @@ public class Task1Manager : MonoBehaviour
     {
         gameMngr.taskNb = 1;
         trialNb = 0;
+        gameMngr.taskPaused = true;
         //targetNb = 0;
         maxTrial = gameMngr.taskData.task1Data.task1Trials.Count();
         maxTargetObj = gameMngr.taskData.task1Data.locations.Count();
@@ -115,13 +127,13 @@ public class Task1Manager : MonoBehaviour
     // Begin the task
     public void StartTrial()
     {
-        //dialogBox.OpenDialogBoxImg("this is a test", "none");
+        Debug.Log("StartTrial");
         if (trialNb < maxTrial)    //if there are trials left
         {
-     
+            Cursor.lockState = CursorLockMode.Locked;
             trialNb++;
             //TODO: Make visor visible
-            Debug.Log("Task 1 - Trial #: " + trialNb + " / " + maxTrial);
+            //Debug.Log("Task 1 - Trial #: " + trialNb + " / " + maxTrial);
             //SetRoute()
             routeName = gameMngr.taskData.task1Data.task1Trials[trialNb-1].routeName;
             if (trialNb >= 1)    //if this isn't the first trial, hide the previous routeDrawn
@@ -132,6 +144,7 @@ public class Task1Manager : MonoBehaviour
             startHotspot = gameMngr.cardDir[trialNb-1];
             playerCtrlr.GotoHotspot(startHotspot);
             SetTargetObj();
+            
         }
         else // notrials left
         {
@@ -142,12 +155,30 @@ public class Task1Manager : MonoBehaviour
 
     void SetTargetObj()
     {
-        Debug.Log("SetTargetObj");
+        //Debug.Log("SetTargetObj");
         targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1;
-        Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
-        targetObj = gameMngr.POI[targetLocationIndex];
+        //Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
+        targetLocation = gameMngr.POI[targetLocationIndex];
         targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
+
+        //Set and save the start rotation
+
+        //startRotation = playerCtrlr.player.transform.rotation.eulerAngles.y;
+
+        //Pause task to set and save the correct rotation to the target
+        gameMngr.taskPaused = true;
+        playerCtrlr.playerCam.transform.LookAt(targetLocation.transform);
+        correctRotationToTarget = playerCtrlr.playerCam.transform.rotation.eulerAngles.y;
+        gameMngr.taskPaused = false;
+
+        //gameMngr.taskPaused = false;
+
+
+        //player.GetComponent<PlayerController>().currentRotation = player.transform.rotation.eulerAngles;
+
+        //Calculate the correct angle to target
         
+
     }
 
     void EndTask()
@@ -159,11 +190,11 @@ public class Task1Manager : MonoBehaviour
 
     public void OnValidation()
     {
-        if (true)//TODO: Check if pointing to target obj
-        {
             //Debug.Log("Inside Task1 OnValidation()");
             if (targetNb < maxTargetObj) // if there are target objects left in this trial
             {
+                savedTrials.Add(degreesToTarget);
+            savedTrialsUI.Add(degreesToTarget.ToString("F2"));
                 targetNb++;
                 SetTargetObj();
             }
@@ -171,10 +202,6 @@ public class Task1Manager : MonoBehaviour
             {
                 StartTrial(); // start the next trial
             }
-        }
-        else
-        {
-            Debug.Log("Not pointing at target. Angle to target: " + angleToTarget + ",  angle to validate: " + angleToValidate);
-        }
+        
     }
 }
