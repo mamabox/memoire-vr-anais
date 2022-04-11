@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI taskNbTxt;
     public TextMeshProUGUI totalTimeTxt;
     public TextMeshProUGUI taskTimeTxt;
+    public List<TextMeshProUGUI> TaskBtnLabels;
 
     //Time
     private float startTime;
@@ -40,8 +41,11 @@ public class GameManager : MonoBehaviour
     public bool readTaskInstructions;
 
     private Task1Manager task1;
+    
     //private Task2Manager task2;
     //private Task3Manager task3;
+
+    public TaskData taskData;
 
     public int taskNb;
 
@@ -69,15 +73,29 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        UpdateClock();
         UIupdate();
     }
 
+    private void UpdateClock()
+    {
+        totalTime = TimeSpan.FromSeconds(Time.time - startTime);
+        if (taskStarted && !taskEnded)  //if task is ongoing
+        {
+            taskTime = TimeSpan.FromSeconds(Time.time - taskStartTime);
+            //Debug.Log("TimeSpan" + TimeSpan.FromSeconds(0));
+        }
+        else
+            taskTime = TimeSpan.FromSeconds(0);
+
+    }
+
+    // Manages the User interface not specific to tasks 
     private void UIupdate()
     {
-        totalTimeTxt.text = TimeSpan.FromSeconds(Time.time - startTime).ToString(@"mm\:ss");
+        totalTimeTxt.text = totalTime.ToString(@"mm\:ss");
         taskTimeTxt.text = taskTime.ToString(@"mm\:ss");
         taskNbTxt.text = "Task " + taskNb;
-
     }
 
     //Hide UI elements
@@ -88,8 +106,11 @@ public class GameManager : MonoBehaviour
         dialogBox.SetActive(false);
         //debugUI.SetActive(false);
         menuUI.SetActive(true);
+        if (taskStarted)
+            EndTask();
     }
 
+    
     public void StartSession()
     {
         Debug.Log("StartSession()");
@@ -99,11 +120,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    
     public void StartTask()
     {
+        Debug.Log("Start task");
         if (!taskStarted)   //if no task has started
         {
             taskStarted = true;
+            taskStartTime = Time.time;
             Cursor.lockState = CursorLockMode.Locked;
             if (taskNb == 1)
             {
@@ -129,17 +153,18 @@ public class GameManager : MonoBehaviour
 
     public void EndTask()
     {
+        Debug.Log("End task");
         endTime = Time.time;
+        taskStarted = false;
         taskEnded = true;
-        Cursor.lockState = CursorLockMode.None;
-        //TODO: Calculate end time
+        //Cursor.lockState = CursorLockMode.None;
+        SaveData();
+        OpenMenu();
     }
 
-    public void ExitTask()
+    public void EndSession()
     {
-        Debug.Log("ExitTask");
-        OpenMenu();
-        //SaveData();
+        Debug.Log("EndSession");
     }
 
 
@@ -148,6 +173,13 @@ public class GameManager : MonoBehaviour
     {
         playerController.GotoHotspot(cardDir[0]);
 
+    }
+
+    private void SaveData()
+    {
+        //TODO: Calculate end time
+        Debug.Log("Save data");
+        Debug.Log("Total task time: " + taskTime);
     }
 
     public void CloseDialogBox()

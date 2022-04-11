@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))    //Menu toggle
         {
-            gameManager.ExitTask();
+            gameManager.EndTask();
             //if (gameManager.menuUI.activeInHierarchy)
             //    gameManager.menuUI.SetActive(false);
             //else

@@ -27,8 +27,11 @@ public class Task1Manager : MonoBehaviour
     public TextMeshProUGUI angleToTargetTxt;
     public TextMeshProUGUI playerRotation;
 
-    private int targetObjIndex;
-    private int trialNb;
+    private int targetLocationIndex;
+    private string targetLocationName;
+    private string routeName;
+    private int trialNb;    // 1 to 4
+    private int targetNb; // 1 to 6
     private int maxTrial;
     private int maxTargetObj;
 
@@ -36,11 +39,7 @@ public class Task1Manager : MonoBehaviour
 
     private List<string> trialStart = new List<string> { "N", "E", "S", "W" };
     private List<string> routeN = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
-    private List<string> routeE = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
-    private List<string> routeS = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
-    private List<string> routeW = new List<string> { "E1", "E2", "E3", "E4", "E5", "E6" };
 
-    private List<string> instructions = new List<string> { "« Vous allez parcourir cette ville à l’aide de flèches au sol. Vous verrez une image apparaître devant vous qui vous indiquera le lieu que vous allez rejoindre grâce aux flèches. Une fois que vous aurez atteint le premier lieu, vous cliquerez sur une pancarte et une nouvelle image de lieu apparaîtra. Vous rejoindrez ce lieu en suivant de nouvelles flèches. Vous allez faire cela pour 6 lieux différents. Une fois que vous aurez vu les 6 lieux, vous apparaîtrez à un nouveau point de la ville et vous recommencerez la même chose. La consigne vous sera rappelez. Lorsque vous suivrez les chemins, soyez attentif à votre environnement et regardez bien autour de vous. Pour début l’expérience, cliquer sur X ».", "Il faut rejoindre ce lieu", "Tâche terminée" };
 
     private List<Hotspot> routeNObj;
 
@@ -59,6 +58,7 @@ public class Task1Manager : MonoBehaviour
         Debug.Log("TASK 1 START");
         //gameMngr.taskNb = 1;
         //SetupTask();
+        task1UI.SetActive(true);
         StartTrial();
 
     }
@@ -75,8 +75,8 @@ public class Task1Manager : MonoBehaviour
 
     private void UpdateUI()
     {
-        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial;
-        targetTxt.text = "Target: " + (targetObjIndex + 1) + " / " + maxTargetObj;
+        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial + ": "+ routeName;
+        targetTxt.text = "Target: " + targetNb + " / " + maxTargetObj + ": " + targetLocationName;
         angleToTargetTxt.text = "AngleToTarget: " + angleToTarget;
         
     }
@@ -86,15 +86,31 @@ public class Task1Manager : MonoBehaviour
     {
         gameMngr.taskNb = 1;
         trialNb = 0;
-        maxTrial = 4;
-        maxTargetObj = 6;
-        dialogBox.OpenDialogBox("First instructions");
-        routeMngr.SpawnLine(routeN, 1);
+        //targetNb = 0;
+        maxTrial = gameMngr.taskData.task1Data.task1Trials.Count();
+        maxTargetObj = gameMngr.taskData.task1Data.locations.Count();
+        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start);
+        //routeMngr.SpawnLine(routeN, 1);
+        DrawRoutes();
         task1UI.SetActive(true);
+        //task2UI.SetActive(false);
+        //task3UI.SetActive(false);
         //gameMngr.dialogBox.SetActive(true);
-        
 
     }
+    public void SaveData()
+    {
+
+    }
+
+    private void DrawRoutes()
+    {
+        for (int x = 0; x < maxTrial; x++)
+        {
+            routeMngr.SpawnLine(gameMngr.taskData.task1Data.task1Trials[x].routeCoord, 1);
+        }
+    }
+
 
     // Begin the task
     public void StartTrial()
@@ -102,10 +118,17 @@ public class Task1Manager : MonoBehaviour
         //dialogBox.OpenDialogBoxImg("this is a test", "none");
         if (trialNb < maxTrial)    //if there are trials left
         {
+     
             trialNb++;
             //TODO: Make visor visible
             Debug.Log("Task 1 - Trial #: " + trialNb + " / " + maxTrial);
-            targetObjIndex = 0; //Set the target object to the first POI
+            //SetRoute()
+            routeName = gameMngr.taskData.task1Data.task1Trials[trialNb-1].routeName;
+            if (trialNb >= 1)    //if this isn't the first trial, hide the previous routeDrawn
+                routeMngr.task1Routes[trialNb-1].SetActive(false);
+            routeMngr.task1Routes[trialNb-1].SetActive(true);
+
+            targetNb = 1; //Set the target object to the first POI
             startHotspot = gameMngr.cardDir[trialNb-1];
             playerCtrlr.GotoHotspot(startHotspot);
             SetTargetObj();
@@ -119,14 +142,18 @@ public class Task1Manager : MonoBehaviour
 
     void SetTargetObj()
     {
-        Debug.Log("TargetObj() index: " + (targetObjIndex +1) + " / " + maxTargetObj);
-        targetObj = gameMngr.POI[targetObjIndex];
+        Debug.Log("SetTargetObj");
+        targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1;
+        Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
+        targetObj = gameMngr.POI[targetLocationIndex];
+        targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
         
     }
 
     void EndTask()
     {
         task1UI.SetActive(false);
+        gameMngr.EndTask();
         Debug.Log("End of task 1");
     }
 
@@ -135,9 +162,9 @@ public class Task1Manager : MonoBehaviour
         if (true)//TODO: Check if pointing to target obj
         {
             //Debug.Log("Inside Task1 OnValidation()");
-            if (targetObjIndex < maxTargetObj-1) // if there are target objects left in this trial
+            if (targetNb < maxTargetObj) // if there are target objects left in this trial
             {
-                targetObjIndex++;
+                targetNb++;
                 SetTargetObj();
             }
             else

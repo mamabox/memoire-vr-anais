@@ -8,6 +8,7 @@ public class RouteManager : MonoBehaviour
     public GameObject routeIndicatorPrefab;
     public List<Material> lineMaterials;
     public GameObject lineDrawn;
+    public List<GameObject> task1Routes;
     private GameManager gameMgr;
 
 
@@ -54,13 +55,15 @@ public class RouteManager : MonoBehaviour
             //Debug.Log("Draw at (" + string.Join(", ", _coord) + ")");
             lRend.SetPosition(i, new Vector3(float.Parse(_coord[0]) * gameManager.blockSize, 0.01f, float.Parse(_coord[1]) * gameManager.blockSize));
             */
-            Debug.Log("Line to draw: # " + i + ": " + route[i] + " is hotspot[" + gameMgr.ReturnHotspotIndex(route[i])+"]");
+            //Debug.Log("Line to draw: # " + i + ": " + route[i] + " is hotspot[" + gameMgr.ReturnHotspotIndex(route[i])+"]");
             _hotspotIndex = gameMgr.ReturnHotspotIndex(route[i]);
             _vectorToDraw = new Vector3(gameMgr.routeHotspots[_hotspotIndex].GetComponent<Hotspot>().coord[0], 1f, gameMgr.routeHotspots[_hotspotIndex].GetComponent<Hotspot>().coord[1]);
             lRend.SetPosition(i,_vectorToDraw);
         }
 
         lineDrawn = newLineGen; //Object of the line drawn
+        task1Routes.Add(lineDrawn);
+        lineDrawn.SetActive(false);
         
     }
 }

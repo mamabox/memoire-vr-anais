@@ -53,7 +53,7 @@ public class DialogBox : MonoBehaviour
     public void OpenDialogBox(string text)
     {
         this.gameObject.SetActive(true);
-        Debug.Log("Open a dialog box with text: " + text);
+        //Debug.Log("Open a dialog box with text: " + text);
         instructionsWithImg.SetActive(false);
         instructions.gameObject.SetActive(true);
         instructions.text = text;
@@ -62,7 +62,7 @@ public class DialogBox : MonoBehaviour
     public void OpenDialogBoxImg(string text, string image)
     {
         this.gameObject.SetActive(true);
-        Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
+        //Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
         instructionsWithImg.SetActive(true);
         instructions.gameObject.SetActive(false);
         string fileName = image + ".png";

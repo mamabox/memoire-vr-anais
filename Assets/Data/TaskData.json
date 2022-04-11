@@ -1,0 +1,97 @@
+﻿{
+    "task1Data": {
+        "taskID": 1,
+        "description": "Tâche d'apprentisage",
+        "dropdownMenuText": "1 - Apprentissage",
+        "instructions": {
+            "start": "Vous allez parcourir cette ville à l’aide de flèches au sol. Vous verrez une image apparaître devant vous qui vous indiquera le lieu que vous allez rejoindre grâce aux flèches. Une fois que vous aurez atteint le premier lieu, vous cliquerez sur une pancarte et une nouvelle image de lieu apparaîtra. Vous rejoindrez ce lieu en suivant de nouvelles flèches. Vous allez faire cela pour 6 lieux différents. Une fois que vous aurez vu les 6 lieux, vous apparaîtrez à un nouveau point de la ville et vous recommencerez la même chose. La consigne vous sera rappelez. Lorsque vous suivrez les chemins, soyez attentif à votre environnement et regardez bien autour de vous. Pour début l’expérience, cliquer sur X.",
+            "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
+            "attempts": [ "Il faut rejoindre ce lieu", "Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
+        },
+        "visorSize": 0.5,
+        "locations": [
+            {
+                "locationID": 1,
+                "name": "banque",
+                "pronoun": "la"
+            },
+            {
+                "locationID": 2,
+                "name": "hôpital",
+                "pronoun": "l'"
+            },
+            {
+                "locationID": 3,
+                "name": "garage",
+                "pronoun": "le"
+            },
+            {
+                "locationID": 4,
+                "name": "supermaché",
+                "pronoun": "le"
+            },
+            {
+                "locationID": 5,
+                "name": "fleuriste",
+                "pronoun": "le"
+            },
+            {
+                "locationID": 6,
+                "name": "station d'essence",
+                "pronoun": "la"
+            }
+
+        ],
+        "task1Trials": [
+            {
+                "routeName": "Nord",
+                "routeCoord": [ "E1", "E2", "E3", "E4", "E5" ],
+                "startOrientation": "S",
+                "targetLocations": [ 1, 2, 3, 4, 5, 6 ]
+
+            },
+            {
+                "routeName": "Est",
+                "routeCoord": [ "E1", "E2", "E3", "E4", "E5" ],
+                "startOrientation": "O",
+                "targetLocations": [ 4, 5, 6, 1, 2, 3 ]
+
+            },
+            {
+                "routeName": "Sud",
+                "routeCoord": [ "E1", "E2", "E3", "E4", "E5" ],
+                "startOrientation": "N",
+                "targetLocations": [ 5, 3, 4, 6, 1, 2 ]
+
+            },
+            {
+                "routeName": "Ouest",
+                "routeCoord": [ "E1", "E2", "E3", "E4", "E5" ],
+                "startOrientation": "E",
+                "targetLocations": [ 2,5,3,4,6,1]
+
+            }
+        ]
+    },
+    "task2Data": {
+        "taskID": 2,
+        "description": "Questions de directions",
+        "dropdownMenuText": "2 - Direction",
+        "instructions": {
+            "start": "Ton objectif est de blah blah blah",
+            "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
+            "attempts": [ "question: ", "Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
+        }
+    },
+    "task3Data": {
+        "taskID": 3,
+        "description": "Tâche d'orientation spatiale",
+        "dropdownMenuText": "3 - Orientation",
+        "instructions": {
+            "start": "Ton objectif est de blah blah blah",
+            "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
+            "attempts": [ "question: ", "Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
+        }
+    }
+}
+    
