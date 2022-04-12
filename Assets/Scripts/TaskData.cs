@@ -75,5 +75,6 @@ public class Location
     public string locationID;
     public string name;
     public string pronoun;
+    public string filename;
     //public string nearbyIntersection;
 }

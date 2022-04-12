@@ -19,6 +19,7 @@ public class DialogBox : MonoBehaviour
     private Texture2D myTexture;
     //private string fileName;
     private byte[] bytes;
+    private string dialogBoxMode;
 
     private GameManager gameMngr;
 
@@ -27,6 +28,7 @@ public class DialogBox : MonoBehaviour
     {
         imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/Media/Images/");
         gameMngr = GameObject.FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        dialogBoxMode = "not set";
     }
 
     // Start is called before the first frame update
@@ -50,36 +52,50 @@ public class DialogBox : MonoBehaviour
 
     } 
 
-    public void OpenDialogBox(string text)
+    public void OpenDialogBox(string text, string mode)
     {
+
+        Cursor.lockState = CursorLockMode.None;
 
         this.gameObject.SetActive(true);
         //Debug.Log("Open a dialog box with text: " + text);
         instructionsWithImg.SetActive(false);
         instructions.gameObject.SetActive(true);
         instructions.text = text;
+        dialogBoxMode = mode;
     }
 
-    public void OpenDialogBoxImg(string text, string image)
+    public void OpenDialogBoxImg(string text, string image, string mode)
     {
+        Cursor.lockState = CursorLockMode.None;
         this.gameObject.SetActive(true);
         //Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
         instructionsWithImg.SetActive(true);
         instructions.gameObject.SetActive(false);
         string fileName = image + ".png";
         Debug.Log("Filename: " + fileName);
-        instructions.text = text;
+        instructionsImg.text = text;
         addTexture(fileName);   // Add the image to dialog box
+        dialogBoxMode = mode;
     }
 
     public void CloseDialogBox()
     {
-        if (gameMngr.taskPaused)
+        Debug.Log("Close dialog box");
+        Cursor.lockState = CursorLockMode.Locked;
+        if (dialogBoxMode == "task")
         {
             gameMngr.StartTask();
         }
-        else
+        else if ( dialogBoxMode == "trial")
+        {
             gameMngr.StartTrial();
+        }
+        else
+        {
+            Debug.Log("No mode");
+        }
+        
     }
 
     void addTexture(string fileName)

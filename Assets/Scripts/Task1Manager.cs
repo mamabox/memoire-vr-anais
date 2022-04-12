@@ -60,12 +60,12 @@ public class Task1Manager : MonoBehaviour
     public void StartTask()
     {
         Debug.Log("TASK 1 START");
-        //gameMngr.taskNb = 1;
-        //SetupTask();
+        gameMngr.taskNb = 1;
+        SetupTask();
         task1UI.SetActive(true);
         //StartTrial();
-        gameMngr.taskPaused = true;
-        dialogBox.OpenDialogBoxImg("this is a test", "none");
+        //gameMngr.taskPaused = true;
+        StartTrial();
 
     }
 
@@ -75,7 +75,7 @@ public class Task1Manager : MonoBehaviour
        if (gameMngr.taskStarted && gameMngr.taskNb == 1)    //Update UI
         {
             UpdateUI();
-            degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
+            
         }
 
     }
@@ -101,7 +101,7 @@ public class Task1Manager : MonoBehaviour
         //targetNb = 0;
         maxTrial = gameMngr.taskData.task1Data.task1Trials.Count();
         maxTargetObj = gameMngr.taskData.task1Data.locations.Count();
-        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start);
+        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start, "task");
         //routeMngr.SpawnLine(routeN, 1);
         DrawRoutes();
         task1UI.SetActive(true);
@@ -127,10 +127,11 @@ public class Task1Manager : MonoBehaviour
     // Begin the task
     public void StartTrial()
     {
+        gameMngr.taskPaused = false;
         Debug.Log("StartTrial");
         if (trialNb < maxTrial)    //if there are trials left
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.lockState = CursorLockMode.Locked;
             trialNb++;
             //TODO: Make visor visible
             //Debug.Log("Task 1 - Trial #: " + trialNb + " / " + maxTrial);
@@ -145,6 +146,7 @@ public class Task1Manager : MonoBehaviour
             playerCtrlr.GotoHotspot(startHotspot);
             SetTargetObj();
             
+
         }
         else // notrials left
         {
@@ -155,29 +157,27 @@ public class Task1Manager : MonoBehaviour
 
     void SetTargetObj()
     {
+        string instructions;
+        string image;
         //Debug.Log("SetTargetObj");
         targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1;
+        
         //Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
         targetLocation = gameMngr.POI[targetLocationIndex];
-        targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
+        targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].pronoun + " " + gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
+        instructions = gameMngr.taskData.task1Data.instructions.attempts[0] + gameMngr.taskData.task1Data.instructions.attempts[1] + " " + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[2];
+        image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
+        dialogBox.OpenDialogBoxImg(instructions, image, "none");
 
-        //Set and save the start rotation
+    }
 
-        //startRotation = playerCtrlr.player.transform.rotation.eulerAngles.y;
-
-        //Pause task to set and save the correct rotation to the target
+    private void CalculateDegreeToTarget()
+    {
         gameMngr.taskPaused = true;
         playerCtrlr.playerCam.transform.LookAt(targetLocation.transform);
         correctRotationToTarget = playerCtrlr.playerCam.transform.rotation.eulerAngles.y;
         gameMngr.taskPaused = false;
-
-        //gameMngr.taskPaused = false;
-
-
-        //player.GetComponent<PlayerController>().currentRotation = player.transform.rotation.eulerAngles;
-
-        //Calculate the correct angle to target
-        
+        degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
 
     }
 
@@ -193,6 +193,7 @@ public class Task1Manager : MonoBehaviour
             //Debug.Log("Inside Task1 OnValidation()");
             if (targetNb < maxTargetObj) // if there are target objects left in this trial
             {
+            CalculateDegreeToTarget();
                 savedTrials.Add(degreesToTarget);
             savedTrialsUI.Add(degreesToTarget.ToString("F2"));
                 targetNb++;

@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         
         if (!taskStarted)   //if no task has started, start task
         {
-            Debug.Log("Start task");
+            Debug.Log("Game Manager - StartTask()");
             taskStarted = true;
             taskStartTime = Time.time;
             taskPaused = true;
@@ -172,9 +172,10 @@ public class GameManager : MonoBehaviour
 
     public void StartTrial()
     {
-
+        taskPaused = false;
         if (taskNb == 1)
         {
+
             task1.StartTrial();
         }
         else
@@ -183,7 +184,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseTask()
     {
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         taskPaused = true;
     }
 
