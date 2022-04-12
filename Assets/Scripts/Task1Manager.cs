@@ -127,6 +127,9 @@ public class Task1Manager : MonoBehaviour
     // Begin the task
     public void StartTrial()
     {
+        string instructions;
+        string image;
+
         gameMngr.taskPaused = false;
         Debug.Log("StartTrial");
         if (trialNb < maxTrial)    //if there are trials left
@@ -145,7 +148,10 @@ public class Task1Manager : MonoBehaviour
             startHotspot = gameMngr.cardDir[trialNb-1];
             playerCtrlr.GotoHotspot(startHotspot);
             SetTargetObj();
-            
+            instructions = gameMngr.taskData.task1Data.instructions.attempts[0] + gameMngr.taskData.task1Data.instructions.attempts[1] + " " + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[2];
+            image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
+            dialogBox.OpenDialogBoxImg(instructions, image, "none");
+
 
         }
         else // notrials left
@@ -157,17 +163,15 @@ public class Task1Manager : MonoBehaviour
 
     void SetTargetObj()
     {
-        string instructions;
-        string image;
+        
         //Debug.Log("SetTargetObj");
         targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1;
         
         //Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
         targetLocation = gameMngr.POI[targetLocationIndex];
         targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].pronoun + " " + gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
-        instructions = gameMngr.taskData.task1Data.instructions.attempts[0] + gameMngr.taskData.task1Data.instructions.attempts[1] + " " + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[2];
-        image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
-        dialogBox.OpenDialogBoxImg(instructions, image, "none");
+
+        
 
     }
 
@@ -183,6 +187,7 @@ public class Task1Manager : MonoBehaviour
 
     void EndTask()
     {
+        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.end, "menu");
         task1UI.SetActive(false);
         gameMngr.EndTask();
         Debug.Log("End of task 1");
@@ -190,15 +195,21 @@ public class Task1Manager : MonoBehaviour
 
     public void OnValidation()
     {
-            //Debug.Log("Inside Task1 OnValidation()");
-            if (targetNb < maxTargetObj) // if there are target objects left in this trial
+        string instructions;
+        string image;
+
+        //Debug.Log("Inside Task1 OnValidation()");
+        if (targetNb < maxTargetObj) // if there are target objects left in this trial
             {
             CalculateDegreeToTarget();
                 savedTrials.Add(degreesToTarget);
             savedTrialsUI.Add(degreesToTarget.ToString("F2"));
                 targetNb++;
                 SetTargetObj();
-            }
+            instructions = gameMngr.taskData.task1Data.instructions.attempts[1] + " " + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[2];
+            image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
+            dialogBox.OpenDialogBoxImg(instructions, image, "none");
+        }
             else
             {
                 StartTrial(); // start the next trial

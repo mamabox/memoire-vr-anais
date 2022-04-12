@@ -4,9 +4,9 @@
         "description": "Tâche d'apprentisage",
         "dropdownMenuText": "1 - Apprentissage",
         "instructions": {
-            "start": "Vous allez parcourir cette ville à l’aide de flèches au sol. Vous verrez une image apparaître devant vous qui vous indiquera le lieu que vous allez rejoindre grâce aux flèches. Une fois que vous aurez atteint le premier lieu, vous cliquerez sur une pancarte et une nouvelle image de lieu apparaîtra. Vous rejoindrez ce lieu en suivant de nouvelles flèches. Vous allez faire cela pour 6 lieux différents. Une fois que vous aurez vu les 6 lieux, vous apparaîtrez à un nouveau point de la ville et vous recommencerez la même chose. La consigne vous sera rappelez. Lorsque vous suivrez les chemins, soyez attentif à votre environnement et regardez bien autour de vous. Pour début l’expérience, cliquer sur X.",
+            "start": "Vous allez parcourir cette ville à l’aide de flèches au sol. Vous verrez une image apparaître devant vous qui vous indiquera le lieu que vous allez rejoindre grâce aux flèches. Une fois que vous aurez atteint le premier lieu, vous cliquerez sur une pancarte et une nouvelle image de lieu apparaîtra. Vous rejoindrez ce lieu en suivant de nouvelles flèches. Vous allez faire cela pour 6 lieux différents.|Une fois que vous aurez vu les 6 lieux, vous apparaîtrez à un nouveau point de la ville et vous recommencerez la même chose. La consigne vous sera rappelez. Lorsque vous suivrez les chemins, soyez attentif à votre environnement et regardez bien autour de vous. Pour début l’expérience, cliquer sur X.",
             "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
-            "attempts": [ "Il te faut rejoindre un nouveau lieu.", ". Une fois que tu es face à ", ", appuie sur le bouton (C) pour valider." ]
+            "attempts": [ "Tu as commencé une nouvelle route.|", ". Une fois que tu es face à ", ", appuie sur le bouton (C) pour valider." ]
         },
         "visorSize": 0.5,
         "locations": [

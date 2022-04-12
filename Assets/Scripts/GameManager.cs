@@ -128,11 +128,12 @@ public class GameManager : MonoBehaviour
     }
 
     //Hide UI elements
-    private void OpenMenu()
+    public void OpenMenu()
     {
         Cursor.lockState = CursorLockMode.None;
         //taskPaused = true;
         dialogBox.SetActive(false);
+        
         //debugUI.SetActive(false);
         menuUI.SetActive(true);
         if (taskStarted)
@@ -202,7 +203,7 @@ public class GameManager : MonoBehaviour
         taskEnded = true;
         //Cursor.lockState = CursorLockMode.None;
         SaveData();
-        OpenMenu();
+        //OpenMenu();
     }
 
     public void EndSession()

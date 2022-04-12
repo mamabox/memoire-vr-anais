@@ -54,27 +54,30 @@ public class DialogBox : MonoBehaviour
 
     public void OpenDialogBox(string text, string mode)
     {
-
-        Cursor.lockState = CursorLockMode.None;
-
         this.gameObject.SetActive(true);
+        gameMngr.taskPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         //Debug.Log("Open a dialog box with text: " + text);
         instructionsWithImg.SetActive(false);
         instructions.gameObject.SetActive(true);
-        instructions.text = text;
+        instructions.text = text.Replace("|", System.Environment.NewLine);
         dialogBoxMode = mode;
+        
     }
 
     public void OpenDialogBoxImg(string text, string image, string mode)
     {
-        Cursor.lockState = CursorLockMode.None;
         this.gameObject.SetActive(true);
+        gameMngr.taskPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         //Debug.Log("Open a dialog box with image (" + image + ") and text: " + text);
         instructionsWithImg.SetActive(true);
         instructions.gameObject.SetActive(false);
         string fileName = image + ".png";
         Debug.Log("Filename: " + fileName);
-        instructionsImg.text = text;
+        instructionsImg.text = text.Replace("|", System.Environment.NewLine);
         addTexture(fileName);   // Add the image to dialog box
         dialogBoxMode = mode;
     }
@@ -83,6 +86,7 @@ public class DialogBox : MonoBehaviour
     {
         Debug.Log("Close dialog box");
         Cursor.lockState = CursorLockMode.Locked;
+        gameMngr.taskPaused = false;
         if (dialogBoxMode == "task")
         {
             gameMngr.StartTask();
@@ -91,11 +95,13 @@ public class DialogBox : MonoBehaviour
         {
             gameMngr.StartTrial();
         }
-        else
+        else if (dialogBoxMode ==  "menu")
         {
-            Debug.Log("No mode");
+            gameMngr.OpenMenu();
         }
-        
+        else
+            Debug.Log("Mode not reconized");
+
     }
 
     void addTexture(string fileName)
