@@ -56,17 +56,26 @@ public class Task1Manager : MonoBehaviour
         dialogBox = FindObjectOfType<GameManager>().dialogBox.GetComponent<DialogBox>();
     }
 
+    public void Start()
+    {
+        SetupTask();
+    }
 
     // Start is called before the first frame update
     public void StartTask()
     {
         Debug.Log("TASK 1 START");
         gameMngr.taskNb = 1;
-        SetupTask();
+        //SetupTask();
         task1UI.SetActive(true);
+        trialNb = 0;
+        gameMngr.taskStarted = true;
+        gameMngr.taskPaused = true;
+        task1UI.SetActive(true);
+        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start, "trial");
         //StartTrial();
         //gameMngr.taskPaused = true;
-        StartTrial();
+        //StartTrial();
 
     }
 
@@ -96,16 +105,18 @@ public class Task1Manager : MonoBehaviour
     // Configure settings for this task
     public void SetupTask()
     {
-        gameMngr.taskNb = 1;
-        trialNb = 0;
-        gameMngr.taskPaused = true;
+        //gameMngr.taskNb = 1;
+        //trialNb = 0;
+        //gameMngr.taskPaused = true;
+        //task1UI.SetActive(true);
+        //dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start, "task");
         //targetNb = 0;
         maxTrial = gameMngr.taskData.task1Data.task1Trials.Count();
         maxTargetObj = gameMngr.taskData.task1Data.locations.Count();
-        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start, "task");
+        
         //routeMngr.SpawnLine(routeN, 1);
         DrawRoutes();
-        task1UI.SetActive(true);
+        
         //task2UI.SetActive(false);
         //task3UI.SetActive(false);
         //gameMngr.dialogBox.SetActive(true);

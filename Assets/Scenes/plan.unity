@@ -36665,7 +36665,7 @@ PrefabInstance:
     - target: {fileID: 3413788402750533213, guid: e3eb2a367d68d40dd81569e807933d88,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetupTask
+      value: StartTask
       objectReference: {fileID: 0}
     - target: {fileID: 3413788402750533213, guid: e3eb2a367d68d40dd81569e807933d88,
         type: 3}
