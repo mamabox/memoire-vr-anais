@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // KEYBOARD AND JOYSTICK INPUT
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) && !gameManager.taskPaused) // Player presses validation key when not in a dialog box
         {
             //Debug.Log("Keyboard press X");
             gameManager.OnValidation();

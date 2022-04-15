@@ -26,7 +26,7 @@ public class Task1Manager : MonoBehaviour
     public GameObject task1UI;
     public TextMeshProUGUI trialTxt;
     public TextMeshProUGUI targetTxt;
-    public TextMeshProUGUI rotToTargetTxt;
+    public TextMeshProUGUI distanceToTargetTxt;
     public TextMeshProUGUI playerRotationTxt;
     public TextMeshProUGUI angleToTargetTxt;
     public TextMeshProUGUI savedTrialsTxt;
@@ -37,8 +37,9 @@ public class Task1Manager : MonoBehaviour
     private string routeName;
     private int trialNb;    // 1 to 4
     private int targetNb; // 1 to 6
-    private int maxTrial;
-    private int maxTargetObj;
+    private int maxTrial; // how many routes
+    private int maxTargetObj;   // 6
+    private float distanceToTarget;   // how far the player is to the target object
 
     
 
@@ -69,6 +70,7 @@ public class Task1Manager : MonoBehaviour
         //SetupTask();
         task1UI.SetActive(true);
         trialNb = 0;
+        //distanceToTarget = 0;
         gameMngr.taskStarted = true;
         gameMngr.taskPaused = true;
         task1UI.SetActive(true);
@@ -82,8 +84,9 @@ public class Task1Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (gameMngr.taskStarted && gameMngr.taskNb == 1)    //Update UI
+       if (gameMngr.taskStarted && gameMngr.taskNb == 1 && trialNb > 0)    //Update UI
         {
+            distanceToTarget = Vector3.Distance(playerCtrlr.player.transform.position, targetLocation.transform.position); //update the distance only if a trial has started
             UpdateUI();
             
         }
@@ -96,7 +99,7 @@ public class Task1Manager : MonoBehaviour
         targetTxt.text = "Target: " + targetNb + " / " + maxTargetObj + ": " + targetLocationName;
         //playerRotationTxt.text = "temp";
         playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
-        rotToTargetTxt.text = "Rot to target: " + correctRotationToTarget.ToString("F2");
+        distanceToTargetTxt.text = "Distance to target: " + distanceToTarget.ToString("F2");
         angleToTargetTxt.text = "Degrees to target: " + degreesToTarget.ToString("F2");
         savedTrialsTxt.text = String.Join(",", savedTrialsUI);
         
@@ -131,8 +134,9 @@ public class Task1Manager : MonoBehaviour
     {
         for (int x = 0; x < maxTrial; x++)
         {
-            Debug.Log("Draw line " + x + " out of " + maxTrial);
-            routeMngr.SpawnLine(gameMngr.taskData.task1Data.task1Trials[x].routeCoord, x+1);
+            //Debug.Log("Draw line " + x + " out of " + maxTrial);
+            routeMngr.SpawnLine(gameMngr.taskData.task1Data.task1Trials[x].routeCoord, x+1, gameMngr.taskData.task1Data.task1Trials[x].routeName);
+
         }
     }
 
@@ -153,9 +157,7 @@ public class Task1Manager : MonoBehaviour
             //Debug.Log("Task 1 - Trial #: " + trialNb + " / " + maxTrial);
             //SetRoute()
             routeName = gameMngr.taskData.task1Data.task1Trials[trialNb-1].routeName;
-            if (trialNb >= 1)    //if this isn't the first trial, hide the previous routeDrawn
-                routeMngr.task1Routes[trialNb-1].SetActive(false);
-            routeMngr.task1Routes[trialNb-1].SetActive(true);
+            DisplayRoute(trialNb);  //Display the current route and hide all others
 
             targetNb = 1; //Set the target object to the first POI
             startHotspot = gameMngr.cardDir[trialNb-1];
@@ -174,14 +176,25 @@ public class Task1Manager : MonoBehaviour
 
     }
 
+    private void DisplayRoute(int routeNb)
+    {
+        for (int x = 0; x < maxTrial; x++)  // for each route
+        if (x != routeNb-1)    
+            routeMngr.task1Routes[x].SetActive(false);
+        else
+            routeMngr.task1Routes[x].SetActive(true);
+    }
+
     void SetTargetObj()
     {
-        
+
         //Debug.Log("SetTargetObj");
-        targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1;
-        
+        targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1; //Index of target location for current trial
+        Debug.Log("Target location index is " + targetLocationIndex);
+
         //Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
         targetLocation = gameMngr.POI[targetLocationIndex];
+        
         targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].pronoun + " " + gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
 
         

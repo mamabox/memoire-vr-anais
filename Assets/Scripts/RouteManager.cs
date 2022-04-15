@@ -28,7 +28,8 @@ public class RouteManager : MonoBehaviour
         
     }
 
-    public void SpawnLine(List<string> route, int material)
+    // Renders a line with 3 parameters: coordinates, material index for color and the name of the route
+    public void SpawnLine(List<string> route, int material, string name)
     {
         int _hotspotIndex;
         Vector3 _vectorToDraw;
@@ -55,7 +56,7 @@ public class RouteManager : MonoBehaviour
             //Debug.Log("Draw at (" + string.Join(", ", _coord) + ")");
             lRend.SetPosition(i, new Vector3(float.Parse(_coord[0]) * gameManager.blockSize, 0.01f, float.Parse(_coord[1]) * gameManager.blockSize));
             */
-            Debug.Log("Line to draw: # " + i + ": " + route[i] + " is hotspot[" + gameMgr.ReturnHotspotIndex(route[i])+"]");
+            //Debug.Log("Line to draw: # " + i + ": " + route[i] + " is hotspot[" + gameMgr.ReturnHotspotIndex(route[i])+"]");
             _hotspotIndex = gameMgr.ReturnHotspotIndex(route[i]);
             _vectorToDraw = new Vector3(gameMgr.routeHotspots[_hotspotIndex].GetComponent<Hotspot>().coord[0], .3f, gameMgr.routeHotspots[_hotspotIndex].GetComponent<Hotspot>().coord[1]);
             lRend.SetPosition(i,_vectorToDraw);
@@ -63,6 +64,7 @@ public class RouteManager : MonoBehaviour
 
         lineDrawn = newLineGen; //Object of the line drawn
         task1Routes.Add(lineDrawn);
+        lineDrawn.name = "Task1 - Route " + name;
         lineDrawn.SetActive(false);
         
     }
