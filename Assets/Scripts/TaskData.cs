@@ -45,6 +45,7 @@ public class Task2Data
     public string description;
     public string dropdownMenuText;
     public Instructions instructions;
+    public List<Task2Trial> task2Trials;
 }
 
 [System.Serializable]
@@ -80,6 +81,14 @@ public class Task1Trial
     public List<string> routeCoord;
     public string startOrientation;
     public List<int> targetLocations;
+}
+
+[System.Serializable]
+public class Task2Trial
+{
+    public string difficulty;
+    public int targetLocationID;
+    public string startOrientation;
 }
 
 [System.Serializable]

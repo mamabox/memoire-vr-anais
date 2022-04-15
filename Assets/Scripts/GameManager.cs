@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public List<string> POINames;
 
-    private PlayerController playerController;
+    public PlayerController playerController;
     private GameObject player;
     private GameObject playerCam;
     public GameObject dialogBox;

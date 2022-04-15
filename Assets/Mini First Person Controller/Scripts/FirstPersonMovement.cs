@@ -10,6 +10,7 @@ public class FirstPersonMovement : MonoBehaviour
     public bool IsRunning { get; private set; }
     public float runSpeed = 9;
     public KeyCode runningKey = KeyCode.LeftShift;
+    public bool freezeMovement = false;
 
     Rigidbody rigidbody;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
@@ -26,7 +27,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (gameMngr.taskStarted && !gameMngr.taskPaused)
+        if (gameMngr.taskStarted && !gameMngr.taskPaused && !freezeMovement)
         {
             // Update IsRunning from input.
             IsRunning = canRun && Input.GetKey(runningKey);

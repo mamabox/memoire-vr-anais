@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private float newOrientation;
     public float startOrientation; // Player's start orientation
     private GameManager gameManager;
+    //public bool freezeMovement;
     //private DialogBox dialogBox;
 
     private List<string> validOrientation = new List<string> { "N", "NE", "E", "SE", "S", "SO", "O", "NO" }; //List of valid orientations
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
         //dialogBox = FindObjectOfType<GameManager>().GetComponent<DialogBox>();
         // Read player's  sp
         SetStartOrientation("S"); //Set the player's start direction for Task 1
+        player.GetComponent<FirstPersonMovement>().freezeMovement = false ;
     }
 
     // Start is called before the first frame update

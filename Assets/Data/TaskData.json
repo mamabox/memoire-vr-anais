@@ -93,8 +93,70 @@
         "instructions": {
             "start": "Ton objectif est de blah blah blah",
             "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
-            "attempts": [ "question: ", "Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
-        }
+            "attempts": ["Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
+        },
+        "task2Trials": [
+            {
+                "difficulty": "easy",
+                "targetLocationID": 2,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "easy",
+                "targetLocationID": 6,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "easy",
+                "targetLocationID": 1,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "easy",
+                "targetLocationID": 3,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "easy",
+                "targetLocationID": 4,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "easy",
+                "targetLocationID": 5,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "hard",
+                "targetLocationID": 2,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "hard",
+                "targetLocationID": 1,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "hard",
+                "targetLocationID": 6,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "hard",
+                "targetLocationID": 4,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "hard",
+                "targetLocationID": 5,
+                "startOrientation": "N"
+            },
+            {
+                "difficulty": "hard",
+                "targetLocationID": 3,
+                "startOrientation": "N"
+            }
+        ]
     },
     "task3Data": {
         "taskID": 3,
