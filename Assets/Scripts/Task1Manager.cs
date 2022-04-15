@@ -132,7 +132,7 @@ public class Task1Manager : MonoBehaviour
         for (int x = 0; x < maxTrial; x++)
         {
             Debug.Log("Draw line " + x + " out of " + maxTrial);
-            routeMngr.SpawnLine(gameMngr.taskData.task1Data.task1Trials[x].routeCoord, 1);
+            routeMngr.SpawnLine(gameMngr.taskData.task1Data.task1Trials[x].routeCoord, x+1);
         }
     }
 
