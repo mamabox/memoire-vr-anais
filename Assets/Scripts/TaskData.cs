@@ -2,14 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
 public class TaskData
 {
+    public FirstPersonSettings firstPersonSettings;
     public Task1Data task1Data;
     public Task2Data task2Data;
     public Task3Data task3Data;
 
 }
+
+
+[System.Serializable]
+public class FirstPersonSettings
+{
+
+    public float playerSpeed;
+    public float lookSensitivity;
+    public float lookSmoothing;
+}
+
 
 [System.Serializable]
 public class Task1Data

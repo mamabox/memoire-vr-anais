@@ -351,7 +351,7 @@ PrefabInstance:
     - target: {fileID: 5269945355364510514, guid: f2e0b7ae4dae8cf44955bccd3512b213,
         type: 3}
       propertyPath: speed
-      value: 12
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5286307983767585980, guid: f2e0b7ae4dae8cf44955bccd3512b213,
         type: 3}
@@ -15318,6 +15318,10 @@ MonoBehaviour:
   playerPos: []
   playerRot: []
   taskData:
+    firstPersonSettings:
+      playerSpeed: 0
+      lookSensitivity: 0
+      lookSmoothing: 0
     task1Data:
       scenarioID: 0
       description: 

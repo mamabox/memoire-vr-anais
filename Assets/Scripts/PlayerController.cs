@@ -88,6 +88,15 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    // Set FirstPerson settings from .json file
+    public void SetFirstPersonSettings()
+    {
+        player.GetComponent<FirstPersonMovement>().speed = gameManager.taskData.firstPersonSettings.playerSpeed;
+        player.GetComponent<FirstPersonLook>().sensitivity = gameManager.taskData.firstPersonSettings.lookSensitivity;
+        player.GetComponent<FirstPersonLook>().smoothing = gameManager.taskData.firstPersonSettings.lookSmoothing;
+
+        //gameManager.taskData.firstPersonSettings.playerSpeed;
+    }
 
     public void SetStartOrientation(string carDir)
     {

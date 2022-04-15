@@ -59,7 +59,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //StartSession();
+        
+        StartSession();
     }
 
     private void Awake()
@@ -147,10 +148,12 @@ public class GameManager : MonoBehaviour
         sessionStarted = true;
         //sessionPaused = false;
         startTime = Time.time;
+        playerController.SetFirstPersonSettings();
 
     }
 
-    
+
+
     public void StartTask()
     {
         
