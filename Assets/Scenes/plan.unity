@@ -8947,7 +8947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 237831262}
   m_Layer: 0
-  m_Name: Task 2 Start
+  m_Name: Task 2 Start Locations
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
