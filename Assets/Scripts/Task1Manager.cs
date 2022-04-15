@@ -71,8 +71,8 @@ public class Task1Manager : MonoBehaviour
         task1UI.SetActive(true);
         trialNb = 0;
         //distanceToTarget = 0;
-        gameMngr.taskStarted = true;
-        gameMngr.taskPaused = true;
+        //gameMngr.taskStarted = true;
+        //gameMngr.taskPaused = true;
         task1UI.SetActive(true);
         dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start, "trial");
         //StartTrial();

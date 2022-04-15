@@ -89,7 +89,7 @@ public class DialogBox : MonoBehaviour
         gameMngr.taskPaused = false;
         if (dialogBoxMode == "task")
         {
-            gameMngr.StartTask();
+            gameMngr.StartTask(gameManager.taskNb);
         }
         else if ( dialogBoxMode == "trial")
         {

@@ -92,9 +92,9 @@ public class PlayerController : MonoBehaviour
     public void SetFirstPersonSettings()
     {
         player.GetComponent<FirstPersonMovement>().speed = gameManager.taskData.firstPersonSettings.playerSpeed;
-        player.GetComponent<FirstPersonLook>().sensitivity = gameManager.taskData.firstPersonSettings.lookSensitivity;
-        player.GetComponent<FirstPersonLook>().smoothing = gameManager.taskData.firstPersonSettings.lookSmoothing;
-
+        playerCam.GetComponent<FirstPersonLook>().sensitivity = gameManager.taskData.firstPersonSettings.lookSensitivity;
+        playerCam.GetComponent<FirstPersonLook>().smoothing = gameManager.taskData.firstPersonSettings.lookSmoothing;
+        
         //gameManager.taskData.firstPersonSettings.playerSpeed;
     }
 

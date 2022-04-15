@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI playerPositionTxt;
     public TextMeshProUGUI playerRotationTxt;
     public List<TextMeshProUGUI> TaskBtnLabels;
+    public GameObject visor;
+    private bool enableVisor;
 
     //Time
     private float startTime;
@@ -149,12 +151,21 @@ public class GameManager : MonoBehaviour
         //sessionPaused = false;
         startTime = Time.time;
         playerController.SetFirstPersonSettings();
+        SetVisorSize();
 
     }
 
+    private void SetVisorSize()
+    {
+        float _visorSize = taskData.task1Data.visorSize;
+        if (_visorSize > 0){
+            //visor.SetActive(true);
+            visor.GetComponent<RectTransform>().localScale = new Vector3(_visorSize, _visorSize, 1);
+            
+        }
+    }
 
-
-    public void StartTask()
+    public void StartTask(int taskNb)
     {
         
         if (!taskStarted)   //if no task has started, start task
@@ -163,6 +174,7 @@ public class GameManager : MonoBehaviour
             taskStarted = true;
             taskStartTime = Time.time;
             taskPaused = true;
+            visor.SetActive(true);
             //Cursor.lockState = CursorLockMode.Locked;
             if (taskNb == 1)
             {
@@ -207,6 +219,7 @@ public class GameManager : MonoBehaviour
         //Cursor.lockState = CursorLockMode.None;
         SaveData();
         //OpenMenu();
+        visor.SetActive(false);
     }
 
     public void EndSession()

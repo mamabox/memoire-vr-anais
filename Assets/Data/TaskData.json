@@ -14,7 +14,7 @@
             "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
             "attempts": [ "Tu as commencé une nouvelle route.|", ". Une fois que tu es face à ", ", appuie sur le bouton (C) pour valider." ]
         },
-        "visorSize": 0.5,
+        "visorSize": 0.25,
         "locations": [
             {
                 "locationID": 1,
