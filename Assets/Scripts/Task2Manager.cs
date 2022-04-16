@@ -18,7 +18,7 @@ public class Task2Manager : MonoBehaviour
     private GameObject targetLocation;
     public List<GameObject> allStartHotspots;  // Hotspots for all - added in Unity Editor
     
-    private PlayerController playerCtrlr;
+    private PlayerController2 playerCtrlr;
 
     private DialogBox dialogBox;
 
@@ -54,7 +54,7 @@ public class Task2Manager : MonoBehaviour
     private void Awake()
     {
         gameMngr = FindObjectOfType<GameManager>().GetComponent<GameManager>();
-        playerCtrlr = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        playerCtrlr = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController2>();
         dialogBox = FindObjectOfType<GameManager>().dialogBox.GetComponent<DialogBox>();
     }
 

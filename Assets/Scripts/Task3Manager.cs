@@ -17,7 +17,7 @@ public class Task3Manager : MonoBehaviour
     private GameObject startHotspot;    // Where the player starts at the beginning of the trial
     private GameObject targetLocation;
 
-    private PlayerController playerCtrlr;
+    private PlayerController2 playerCtrlr;
 
     private DialogBox dialogBox;
 
@@ -44,7 +44,7 @@ public class Task3Manager : MonoBehaviour
     private void Awake()
     {
         gameMngr = FindObjectOfType<GameManager>().GetComponent<GameManager>();
-        playerCtrlr = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        playerCtrlr = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController2>();
         dialogBox = FindObjectOfType<GameManager>().dialogBox.GetComponent<DialogBox>();
     }
 

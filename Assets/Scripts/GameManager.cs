@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public List<string> POINames;
 
-    public PlayerController playerController;
+    public PlayerController2 playerController;
     private GameObject player;
     private GameObject playerCam;
     public GameObject dialogBox;
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController2>();
         task1 = GameObject.Find("TaskManager").GetComponent<Task1Manager>();
         task2 = GameObject.Find("TaskManager").GetComponent<Task2Manager>();
         task3 = GameObject.Find("TaskManager").GetComponent<Task3Manager>();

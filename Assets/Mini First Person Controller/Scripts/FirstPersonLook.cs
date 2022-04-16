@@ -12,12 +12,12 @@ public class FirstPersonLook : MonoBehaviour
     public Vector2 velocity; // (FMD)
     Vector2 frameVelocity;
 
-    private PlayerController playerController;
+    private PlayerController2 playerController;
     private GameManager gameMngr;
 
     private void Awake()
     {
-        playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController2>();
         gameMngr = GameObject.FindObjectOfType<GameManager>().GetComponent<GameManager>();
     }
 
