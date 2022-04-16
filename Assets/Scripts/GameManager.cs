@@ -232,6 +232,7 @@ public class GameManager : MonoBehaviour
         endTime = Time.time;
         taskStarted = false;
         taskEnded = true;
+        taskNb = 0;
         //Cursor.lockState = CursorLockMode.None;
         SaveData();
         //OpenMenu();

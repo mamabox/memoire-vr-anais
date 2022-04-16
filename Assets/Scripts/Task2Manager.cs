@@ -70,6 +70,7 @@ public class Task2Manager : MonoBehaviour
         if (gameMngr.taskStarted && gameMngr.taskNb == 2 && trialNb > 0)    //Update UI
         {
             distanceToTarget = Vector3.Distance(playerCtrlr.player.transform.position, targetLocation.transform.position); //update the distance only if a trial has started
+            degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
             UpdateUI();
         }
     }
@@ -83,6 +84,7 @@ public class Task2Manager : MonoBehaviour
         //gameMngr.taskPaused = true;
         
         maxTrial = gameMngr.taskData.task2Data.task2Trials.Count();
+        task2UI.SetActive(false);
     }
 
     // Runs each time the task is selected from the menu
@@ -95,6 +97,7 @@ public class Task2Manager : MonoBehaviour
         savedTrials = new List<float>();
         savedTrialsUI = new List<string>();
         totalDegreesToTarget = 0;
+        avgDegreesToTarget = 0;
 
         task2UI.SetActive(true);
         dialogBox.OpenDialogBox(gameMngr.taskData.task2Data.instructions.start, "trial");
@@ -130,6 +133,7 @@ public class Task2Manager : MonoBehaviour
             playerCtrlr.GotoHotspot(startHotspot);
 
             SetTargetObj();
+            CalculateDegreesToTarget();
             instructions = gameMngr.taskData.task1Data.instructions.attempts[0] + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[1];
             image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
             dialogBox.OpenDialogBoxImg(instructions, image, "none");
@@ -164,9 +168,13 @@ public class Task2Manager : MonoBehaviour
     public void OnValidation()
     {
         Debug.Log("On Validation");
-        CalculateDegreesToTarget();
+
+        // Save trial data
+        totalDegreesToTarget += degreesToTarget;    //Sum
+        avgDegreesToTarget = totalDegreesToTarget / trialNb;
         savedTrials.Add(degreesToTarget);
         savedTrialsUI.Add(degreesToTarget.ToString("F2"));
+
         StartTrial(); // start the next trial
 
     }
@@ -178,9 +186,8 @@ public class Task2Manager : MonoBehaviour
         playerCtrlr.playerCam.transform.LookAt(targetLocation.transform);
         correctRotationToTarget = playerCtrlr.playerCam.transform.rotation.eulerAngles.y;
         gameMngr.taskPaused = false;
-        degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
-        totalDegreesToTarget += degreesToTarget;    //Sum
-        avgDegreesToTarget = totalDegreesToTarget / trialNb;
+        
+
     }
 
     private void SaveData()
@@ -195,7 +202,7 @@ public class Task2Manager : MonoBehaviour
         playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
         distanceToTargetTxt.text = "Distance to target: " + distanceToTarget.ToString("F2");
         angleToTargetTxt.text = "Degrees to target: " + degreesToTarget.ToString("F2");
-        savedTrialsTxt.text = String.Join(",", savedTrialsUI);
+        savedTrialsTxt.text = "Recorded degrees to target: " + String.Join(",", savedTrialsUI);
         avgDegreesToTargetTxt.text = "Degrees to target (avg): " + avgDegreesToTarget.ToString("F2");
 
     }

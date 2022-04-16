@@ -103,7 +103,7 @@ public class Task1Manager : MonoBehaviour
         playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
         distanceToTargetTxt.text = "Distance to target: " + distanceToTarget.ToString("F2");
         angleToTargetTxt.text = "Degrees to target: " + degreesToTarget.ToString("F2");
-        savedTrialsTxt.text = String.Join(",", savedTrialsUI);
+        savedTrialsTxt.text = "Recorded degrees to target: "+ String.Join(",", savedTrialsUI);
         
     }
 
@@ -118,7 +118,7 @@ public class Task1Manager : MonoBehaviour
         //targetNb = 0;
         maxTrial = gameMngr.taskData.task1Data.task1Trials.Count();
         maxTargetObj = gameMngr.taskData.task1Data.locations.Count();
-        
+        task1UI.SetActive(false);
         //routeMngr.SpawnLine(routeN, 1);
         DrawRoutes();
         
