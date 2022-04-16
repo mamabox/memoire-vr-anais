@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject player; // Player object
     public GameObject playerCam;
+    public GameObject rotationCheck;
+
+    public bool calculatingRotation;
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         // Read player's  sp
         SetStartOrientation("S"); //Set the player's start direction for Task 1
         player.GetComponent<FirstPersonMovement>().freezeMovement = false ;
+        calculatingRotation = false;
     }
 
     // Start is called before the first frame update
@@ -36,6 +40,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!calculatingRotation)
+        {
+            rotationCheck.transform.rotation = Quaternion.Euler(new Vector3(playerCam.transform.eulerAngles.x, player.transform.eulerAngles.y, player.transform.eulerAngles.z));
+
+        }
+
         // KEYBOARD AND JOYSTICK INPUT
         if (Input.GetKeyDown(KeyCode.X) && !gameManager.taskPaused) // Player presses validation key when not in a dialog box
         {
@@ -113,7 +123,7 @@ public class PlayerController : MonoBehaviour
         string _hotspotOrientation = hotspot.GetComponent<Hotspot>().orientation.ToUpper();    // Upper case value of hotspot's orientation
         float _newOrientation = GetOrientationAngle(_hotspotOrientation);
 
-        player.transform.position = new Vector3(_coord[0], 1, _coord[1]);   // Move player to the hotspot's coordinate
+        player.transform.position = new Vector3(_coord[0], .25f, _coord[1]);   // Move player to the hotspot's coordinate
 
         Debug.Log("New Y rotation is " + _newOrientation);
         //player.transform.eulerAngles = new Vector3(0, _newOrientation, 0);

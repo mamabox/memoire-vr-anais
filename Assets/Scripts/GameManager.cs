@@ -228,15 +228,19 @@ public class GameManager : MonoBehaviour
 
     public void EndTask()
     {
-        Debug.Log("End task");
-        endTime = Time.time;
-        taskStarted = false;
-        taskEnded = true;
-        taskNb = 0;
-        //Cursor.lockState = CursorLockMode.None;
-        SaveData();
-        //OpenMenu();
-        visor.SetActive(false);
+        if (taskNb == 1)
+        {
+            task1.EndTask();
+        }
+        else if (taskNb == 2)
+        {
+
+            task2.EndTask();
+        }
+        else
+        {
+            Debug.Log("Task 2 or 3 not defined");
+        }
     }
 
     public void EndSession()

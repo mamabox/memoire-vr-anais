@@ -80,6 +80,7 @@ public class Task1Manager : MonoBehaviour
         //StartTrial();
         //gameMngr.taskPaused = true;
         //StartTrial();
+        playerCtrlr.calculatingRotation = true;
 
     }
 
@@ -89,6 +90,7 @@ public class Task1Manager : MonoBehaviour
        if (gameMngr.taskStarted && gameMngr.taskNb == 1 && trialNb > 0)    //Update UI
         {
             distanceToTarget = Vector3.Distance(playerCtrlr.player.transform.position, targetLocation.transform.position); //update the distance only if a trial has started
+            CalculateDegreeToTarget();
             UpdateUI();
             
         }
@@ -205,20 +207,32 @@ public class Task1Manager : MonoBehaviour
 
     private void CalculateDegreeToTarget()
     {
-        gameMngr.taskPaused = true;
-        playerCtrlr.playerCam.transform.LookAt(targetLocation.transform);
-        correctRotationToTarget = playerCtrlr.playerCam.transform.rotation.eulerAngles.y;
-        gameMngr.taskPaused = false;
+        //gameMngr.taskPaused = true;
+        //playerCtrlr.calculatingRotation = true;
+        playerCtrlr.rotationCheck.transform.LookAt(targetLocation.transform);
+        correctRotationToTarget = playerCtrlr.rotationCheck.transform.rotation.eulerAngles.y;
+        //gameMngr.taskPaused = false;
+        //playerCtrlr.calculatingRotation = false;
         degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
 
     }
 
-    void EndTask()
+    public void EndTask()
     {
+        playerCtrlr.calculatingRotation = false;
         dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.end, "menu");
         task1UI.SetActive(false);
-        gameMngr.EndTask();
+        //gameMngr.EndTask();
         Debug.Log("End of task 1");
+
+        gameMngr.endTime = Time.time;
+        gameMngr.taskStarted = false;
+        gameMngr.taskEnded = true;
+        gameMngr.taskNb = 0;
+        //Cursor.lockState = CursorLockMode.None;
+
+
+        gameMngr.visor.SetActive(false);
     }
 
     public void OnValidation()

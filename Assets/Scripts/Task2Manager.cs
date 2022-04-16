@@ -111,6 +111,15 @@ public class Task2Manager : MonoBehaviour
         dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.end, "menu");
         task2UI.SetActive(false);
         playerCtrlr.player.GetComponent<FirstPersonMovement>().freezeMovement = false;
+
+        gameMngr.endTime = Time.time;
+        gameMngr.taskStarted = false;
+        gameMngr.taskEnded = true;
+        gameMngr.taskNb = 0;
+        //Cursor.lockState = CursorLockMode.None;
+
+
+        gameMngr.visor.SetActive(false);
     }
 
     public void StartTrial()
@@ -182,11 +191,14 @@ public class Task2Manager : MonoBehaviour
     // Freeze player's movement and rotation, then calculates the angle to the active target location
     private void CalculateDegreesToTarget()
     {
-        gameMngr.taskPaused = true;
-        playerCtrlr.playerCam.transform.LookAt(targetLocation.transform);
-        correctRotationToTarget = playerCtrlr.playerCam.transform.rotation.eulerAngles.y;
-        gameMngr.taskPaused = false;
-        
+        //gameMngr.taskPaused = true;
+        playerCtrlr.calculatingRotation = true;
+        playerCtrlr.rotationCheck.transform.LookAt(targetLocation.transform);
+        correctRotationToTarget = playerCtrlr.rotationCheck.transform.rotation.eulerAngles.y;
+        Debug.Log("correctionRotationToTarget = " + correctRotationToTarget);
+        //gameMngr.taskPaused = false;
+        playerCtrlr.calculatingRotation = false;
+
 
     }
 
