@@ -46,14 +46,16 @@ public class GameManager : MonoBehaviour
     public bool readTaskInstructions;
     public bool readTrialInstructions;
 
+    //Task Managers
     private Task1Manager task1;
+    private Task2Manager task2;
+    private Task3Manager task3;
 
     //Player Data
     public List<float> playerPos;
     public List<float> playerRot;
     
-    private Task2Manager task2;
-    //private Task3Manager task3;
+    
 
     public TaskData taskData;
 
@@ -70,7 +72,7 @@ public class GameManager : MonoBehaviour
         playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
         task1 = GameObject.Find("TaskManager").GetComponent<Task1Manager>();
         task2 = GameObject.Find("TaskManager").GetComponent<Task2Manager>();
-        //task3 = GameObject.Find("TaskManager").GetComponent<Task3Manager>();
+        task3 = GameObject.Find("TaskManager").GetComponent<Task3Manager>();
         player = playerController.player;
         playerCam = playerController.playerCam;
 
@@ -122,11 +124,11 @@ public class GameManager : MonoBehaviour
     // Manages the User interface not specific to tasks 
     private void UIupdate()
     {
-        totalTimeTxt.text = totalTime.ToString(@"mm\:ss");
-        taskTimeTxt.text = taskTime.ToString(@"mm\:ss");
+        totalTimeTxt.text = "Total: "+ totalTime.ToString(@"mm\:ss");
+        taskTimeTxt.text = "Task: " + taskTime.ToString(@"mm\:ss");
         taskNbTxt.text = "Task " + taskNb;
-        playerPositionTxt.text = playerPos[0].ToString("F2") + " , " + playerPos[1].ToString("F2");
-        playerRotationTxt.text = playerRot[0].ToString("F2") + " , " + playerRot[1].ToString("F2");
+        playerPositionTxt.text = "POS: ("+ playerPos[0].ToString("F2") + " , " + playerPos[1].ToString("F2") + ")";
+        playerRotationTxt.text = "ROT: (" + playerRot[0].ToString("F2") + " , " + playerRot[1].ToString("F2")+ ")";
 
     }
 
@@ -186,11 +188,12 @@ public class GameManager : MonoBehaviour
             {
                 task2.StartTask();
             }
-            else
+            else if
+              (taskNb == 3)
             {
-                Debug.Log("Task 3 not defined");
+                task3.StartTask();
             }
-                readTaskInstructions = false;
+            readTaskInstructions = false;
         }
     }
 
@@ -198,19 +201,11 @@ public class GameManager : MonoBehaviour
     {
         taskPaused = false;
         if (taskNb == 1)
-        {
-
             task1.StartTrial();
-        }
         else if (taskNb == 2)
-        {
-
             task2.StartTrial();
-        }
-        else
-        {
-            Debug.Log("Task 2 or 3 not defined");
-        }
+        else if (taskNb == 3)
+            task3.StartTrial();
     }
 
 
@@ -229,18 +224,11 @@ public class GameManager : MonoBehaviour
     public void EndTask()
     {
         if (taskNb == 1)
-        {
             task1.EndTask();
-        }
         else if (taskNb == 2)
-        {
-
             task2.EndTask();
-        }
-        else
-        {
-            Debug.Log("Task 2 or 3 not defined");
-        }
+        else if (taskNb == 3)
+            task3.EndTask();
     }
 
     public void EndSession()
@@ -248,13 +236,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("EndSession");
     }
 
-
-    // Update is called once per frame
-    public void Test()
-    {
-        playerController.GotoHotspot(cardDir[0]);
-
-    }
 
     private void SaveData()
     {
@@ -270,8 +251,8 @@ public class GameManager : MonoBehaviour
             task1.OnValidation();
         else if (taskNb == 2)
             task2.OnValidation();
-        //else if (taskNb == 3)
-            //task3.OnValidation();
+        else if (taskNb == 3)
+            task3.OnValidation();
 
     }
 

@@ -194,7 +194,7 @@ public class Task1Manager : MonoBehaviour
 
         //Debug.Log("SetTargetObj");
         targetLocationIndex = gameMngr.taskData.task1Data.task1Trials[trialNb-1].targetLocations[targetNb-1]-1; //Index of target location for current trial
-        Debug.Log("Target location index is " + targetLocationIndex);
+//        Debug.Log("Target location index is " + targetLocationIndex);
 
         //Debug.Log("TargetObj() index: " + targetLocationIndex + " / " + maxTargetObj);
         targetLocation = gameMngr.POI[targetLocationIndex];

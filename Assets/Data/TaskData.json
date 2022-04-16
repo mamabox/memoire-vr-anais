@@ -1,6 +1,6 @@
 ﻿{
     "firstPersonSettings": {
-        "playerSpeed": 5,
+        "playerSpeed": 12,
         "lookSensitivity": 2,
         "lookSmoothing": 1.5
     },
@@ -91,7 +91,7 @@
         "description": "Questions de directions",
         "dropdownMenuText": "2 - Direction",
         "instructions": {
-            "start": "« Vous allez apparaître dans différents endroits de la ville et à chaque lieu d’apparition, vous devrez indiquer dans quelle direction se trouve un lieu qui sera affiché en photo devant vous. Pour commencer, appuyez sur (Return)",
+            "start": "Vous allez apparaître dans différents endroits de la ville et à chaque lieu d’apparition, vous devrez indiquer dans quelle direction se trouve un lieu qui sera affiché en photo devant vous. Pour commencer, appuyez sur (Return)",
             "end": "Bien joué, tu as terminé.|Appui sur le bouton (Return) pour revenir au menu principal",
             "attempts": [ "Tourne toi vers ", " et appuie sur le bouton (X) pour valider." ]
         },
@@ -175,10 +175,20 @@
         "description": "Tâche d'orientation spatiale",
         "dropdownMenuText": "3 - Orientation",
         "instructions": {
-            "start": "Ton objectif est de blah blah blah",
+            "start": "Vous allez devoir chercher divers lieux dans la ville, la ville est la même qu’avant, cependant, des barrières ont été rajoutées, et cela bloque certains passages qui étaient libres avant.|Vous allez devoir chercher différents lieux dans un certain ordre. Vous verrez une image d’un lieu et vous devrez pointer l’image afin de commencer. Une fois que vous aurez atteint le lieu demandé, vous devrez cliquer sur une pancarte et une nouvelle image de lieu apparaîtra. Vous aurez 6 lieux à trouver et une fois ces lieux trouvés, vous apparaîtrez de nouveau au centre de la ville et vous recommencerez le même exercice de recherche des lieux, mais dans un ordre différent. La consigne vous sera rappelée une fois les 6 lieux trouvés. Veuillez essayer de prendre les chemins les plus courts ",
             "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
-            "attempts": [ "question: ", "Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
-        }
+            "attempts": [ "Nouvelle essai - 6 nouvelles chances.|", "Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
+        },
+        "task3Trials": [
+            {
+                "startOrientation": "N",
+                "targetLocations": [ 1, 2, 3, 4, 5, 6 ]
+            },
+            {
+                "startOrientation": "N",
+                "targetLocations": [ 4, 3, 2, 5, 1, 6 ]
+            }
+        ]
     }
 }
     

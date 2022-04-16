@@ -55,6 +55,7 @@ public class Task3Data
     public string description;
     public string dropdownMenuText;
     public Instructions instructions;
+    public List<Task3Trial> task3Trials;
 }
 
 [System.Serializable]
@@ -90,6 +91,13 @@ public class Task2Trial
     public int startLocationID;
     public int targetLocationID;
     public string startOrientation;
+}
+
+[System.Serializable]
+public class Task3Trial
+{
+    public string startOrientation;
+    public List<int> targetLocations;
 }
 
 [System.Serializable]

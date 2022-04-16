@@ -106,9 +106,9 @@ public class Task2Manager : MonoBehaviour
 
     public void EndTask()
     {
-        Debug.Log("End of task 1");
-        gameMngr.EndTask();
-        dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.end, "menu");
+        Debug.Log("End of task 2");
+        //gameMngr.EndTask();
+        dialogBox.OpenDialogBox(gameMngr.taskData.task3Data.instructions.end, "menu");
         task2UI.SetActive(false);
         playerCtrlr.player.GetComponent<FirstPersonMovement>().freezeMovement = false;
 
@@ -143,7 +143,7 @@ public class Task2Manager : MonoBehaviour
 
             SetTargetObj();
             CalculateDegreesToTarget();
-            instructions = gameMngr.taskData.task1Data.instructions.attempts[0] + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[1];
+            instructions = gameMngr.taskData.task2Data.instructions.attempts[0] + targetLocationName + gameMngr.taskData.task2Data.instructions.attempts[1];
             image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
             dialogBox.OpenDialogBoxImg(instructions, image, "none");
         }

@@ -76,7 +76,7 @@ public class DialogBox : MonoBehaviour
         instructionsWithImg.SetActive(true);
         instructions.gameObject.SetActive(false);
         string fileName = image + ".png";
-        Debug.Log("Filename: " + fileName);
+//        Debug.Log("Filename: " + fileName);
         instructionsImg.text = text.Replace("|", System.Environment.NewLine);
         addTexture(fileName);   // Add the image to dialog box
         dialogBoxMode = mode;
@@ -84,7 +84,7 @@ public class DialogBox : MonoBehaviour
 
     public void CloseDialogBox()
     {
-        Debug.Log("Close dialog box");
+//        Debug.Log("Close dialog box");
         Cursor.lockState = CursorLockMode.Locked;
         gameMngr.taskPaused = false;
         if (dialogBoxMode == "task")
@@ -99,9 +99,8 @@ public class DialogBox : MonoBehaviour
         {
             gameMngr.OpenMenu();
         }
-        else
+        else if (dialogBoxMode != "none")
             Debug.Log("Mode not reconized");
-
     }
 
     void addTexture(string fileName)
