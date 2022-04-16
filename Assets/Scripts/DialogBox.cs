@@ -9,7 +9,7 @@ using System.Linq;
 public class DialogBox : MonoBehaviour
 {
 
-    private GameManager gameManager;
+    //private GameManager gameManager;
     public TextMeshProUGUI instructionsImg;
     public TextMeshProUGUI instructions;
     public GameObject instructionsWithImg;
@@ -89,7 +89,7 @@ public class DialogBox : MonoBehaviour
         gameMngr.taskPaused = false;
         if (dialogBoxMode == "task")
         {
-            gameMngr.StartTask(gameManager.taskNb);
+            gameMngr.StartTask(gameMngr.taskNb);
         }
         else if ( dialogBoxMode == "trial")
         {

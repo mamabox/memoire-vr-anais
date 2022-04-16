@@ -65,15 +65,17 @@ public class Task1Manager : MonoBehaviour
     // Start is called before the first frame update
     public void StartTask()
     {
-        Debug.Log("TASK 1 START");
+        Debug.Log("TASK 1 - Start()");
         gameMngr.taskNb = 1;
         //SetupTask();
         task1UI.SetActive(true);
         trialNb = 0;
+        savedTrials = new List<float>();
+        savedTrialsUI = new List<string>();
         //distanceToTarget = 0;
         //gameMngr.taskStarted = true;
         //gameMngr.taskPaused = true;
-        task1UI.SetActive(true);
+
         dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.start, "trial");
         //StartTrial();
         //gameMngr.taskPaused = true;
@@ -105,7 +107,7 @@ public class Task1Manager : MonoBehaviour
         
     }
 
-    // Configure settings for this task
+    // Configure settings for this task - called once when program is launched
     public void SetupTask()
     {
         //gameMngr.taskNb = 1;

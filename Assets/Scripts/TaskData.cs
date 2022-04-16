@@ -87,6 +87,7 @@ public class Task1Trial
 public class Task2Trial
 {
     public string difficulty;
+    public int startLocationID;
     public int targetLocationID;
     public string startOrientation;
 }

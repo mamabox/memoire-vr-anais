@@ -91,68 +91,80 @@
         "description": "Questions de directions",
         "dropdownMenuText": "2 - Direction",
         "instructions": {
-            "start": "Ton objectif est de blah blah blah",
-            "end": "Bien joué, tu as terminé.|Appui sur le bouton (B) pour revenir au menu principal",
-            "attempts": ["Tourne toi vers ", " et appuie sur le bouton (C) pour valider." ]
+            "start": "« Vous allez apparaître dans différents endroits de la ville et à chaque lieu d’apparition, vous devrez indiquer dans quelle direction se trouve un lieu qui sera affiché en photo devant vous. Pour commencer, appuyez sur (Return)",
+            "end": "Bien joué, tu as terminé.|Appui sur le bouton (Return) pour revenir au menu principal",
+            "attempts": [ "Tourne toi vers ", " et appuie sur le bouton (X) pour valider." ]
         },
         "task2Trials": [
             {
                 "difficulty": "easy",
+                "startLocationID": 4,
                 "targetLocationID": 2,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "easy",
+                "startLocationID": 5,
                 "targetLocationID": 6,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "easy",
+                "startLocationID": 3,
                 "targetLocationID": 1,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "easy",
+                "startLocationID": 2,
                 "targetLocationID": 3,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "easy",
+                "startLocationID": 6,
                 "targetLocationID": 4,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "easy",
+                "startLocationID": 1,
                 "targetLocationID": 5,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "hard",
+                "startLocationID": 0,
                 "targetLocationID": 2,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "hard",
+                "startLocationID": 0,
                 "targetLocationID": 1,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "hard",
+                "startLocationID": 0,
                 "targetLocationID": 6,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "hard",
+                "startLocationID": 0,
                 "targetLocationID": 4,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "hard",
+                "startLocationID": 0,
                 "targetLocationID": 5,
                 "startOrientation": "N"
             },
             {
                 "difficulty": "hard",
+                "startLocationID": 0,
                 "targetLocationID": 3,
                 "startOrientation": "N"
             }

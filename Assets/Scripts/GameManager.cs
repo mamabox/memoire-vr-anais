@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     public List<float> playerPos;
     public List<float> playerRot;
     
-    //private Task2Manager task2;
+    private Task2Manager task2;
     //private Task3Manager task3;
 
     public TaskData taskData;
@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
     {
         playerController = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerController>();
         task1 = GameObject.Find("TaskManager").GetComponent<Task1Manager>();
-        //task2 = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<Task2Manager>();
-        //task3 = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<Task3Manager>();
+        task2 = GameObject.Find("TaskManager").GetComponent<Task2Manager>();
+        //task3 = GameObject.Find("TaskManager").GetComponent<Task3Manager>();
         player = playerController.player;
         playerCam = playerController.playerCam;
 
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartTask(int taskNb)
+    public void StartTask(int task)
     {
         
         if (!taskStarted)   //if no task has started, start task
@@ -175,14 +175,22 @@ public class GameManager : MonoBehaviour
             taskStartTime = Time.time;
             taskPaused = true;
             visor.SetActive(true);
+            taskNb = task;
             //Cursor.lockState = CursorLockMode.Locked;
             if (taskNb == 1)
             {
                 task1.StartTask();
             }
+            else if
+                (taskNb == 2)
+            {
+                task2.StartTask();
+            }
             else
-                Debug.Log("Task 2 or 3 not defined");
-            readTaskInstructions = false;
+            {
+                Debug.Log("Task 3 not defined");
+            }
+                readTaskInstructions = false;
         }
     }
 
@@ -194,9 +202,17 @@ public class GameManager : MonoBehaviour
 
             task1.StartTrial();
         }
+        else if (taskNb == 2)
+        {
+
+            task2.StartTrial();
+        }
         else
+        {
             Debug.Log("Task 2 or 3 not defined");
+        }
     }
+
 
     public void PauseTask()
     {
@@ -247,6 +263,10 @@ public class GameManager : MonoBehaviour
     {
         if (taskNb == 1)
             task1.OnValidation();
+        else if (taskNb == 2)
+            task2.OnValidation();
+        //else if (taskNb == 3)
+            //task3.OnValidation();
 
     }
 
