@@ -1,0 +1,8 @@
+dateTime,duration,participantID,task,trialNb,difficultystartLocationIndex,startLocation,targetLocationIndex,targetLocation,playerRotation,startRotation,correctRotationToTarget,degreesToTarget,distanceToTarget,trialsDegreeToTarget,totalDegreesToTarget,avgDegreestToTarget
+20220418_201826,00:16,needed,2,1,easy3,le supermaché,1,l' hôpital,312.14,starRotation,243.8112,68.32632,128.1532,68.32632,0,0
+20220418_201826,00:22,needed,2,2,easy4,le fleuriste,5,la station d'essence,184.03,starRotation,60.4473,123.5819,83.61008,123.5819,68.32632,68.32632
+20220418_201826,00:26,needed,2,3,easy2,le garage,0,la banque,358.79,starRotation,305.7534,53.03854,187.1181,53.03854,191.9083,95.95413
+20220418_201826,00:28,needed,2,4,easy1,l' hôpital,2,le garage,115.89,starRotation,92.26156,23.62985,141.9093,23.62985,244.9468,81.64893
+20220418_201826,00:31,needed,2,5,easy5,la station d'essence,3,le supermaché,253.50,starRotation,215.6,37.90021,53.43703,37.90021,268.5767,67.14417
+20220418_201826,00:33,needed,2,6,easy0,la banque,4,le fleuriste,243.54,starRotation,241.7119,1.826111,70.65311,1.826111,306.4769,61.29537
+20220418_201826,00:36,needed,2,7,hard-1,n/a,1,l' hôpital,34.43,starRotation,250.0937,215.6665,171.7871,215.6665,308.303,51.38383

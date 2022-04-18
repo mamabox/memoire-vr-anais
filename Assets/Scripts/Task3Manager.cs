@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Linq;
+using System.IO;
 
 public class Task3Manager : MonoBehaviour
 {
@@ -40,6 +41,13 @@ public class Task3Manager : MonoBehaviour
     private float distanceToTarget;   // how far the player is to the target object
     private float totalDegreesToTarget;    // Sum of rotation error for all trials
     private float avgDegreesToTarget; // Avg rotation error, updated after each trial
+
+    //SaveData
+    private string dateTime;
+    private StreamWriter sw;
+    private string fileName;
+    private char fileNameDelimiter = '-';
+    private char delimiter = ',';
 
     private void Awake()
     {
@@ -82,10 +90,9 @@ public class Task3Manager : MonoBehaviour
         savedTrialsUI = new List<string>();
         dialogBox.OpenDialogBox(gameMngr.taskData.task3Data.instructions.start, "trial");
         playerCtrlr.calculatingRotation = true;
+        StartSavingData();
 
     }
-
-
 
     public void EndTask()
     {
@@ -99,6 +106,7 @@ public class Task3Manager : MonoBehaviour
         gameMngr.taskNb = 0;
 
         gameMngr.visor.SetActive(false);
+        StopSavingData();
     }
 
     public void StartTrial()
@@ -144,6 +152,7 @@ public class Task3Manager : MonoBehaviour
         string instructions;
         string image;
 
+        SaveData();
         //Debug.Log("Inside Task1 OnValidation()");
         if (targetNb < maxTargetObj) // if there are target objects left in this trial
         {
@@ -151,6 +160,7 @@ public class Task3Manager : MonoBehaviour
             // Save trial data
             totalDegreesToTarget += degreesToTarget;    //Sum
             avgDegreesToTarget = totalDegreesToTarget / trialNb;
+            
             savedTrials.Add(degreesToTarget);
             savedTrialsUI.Add(degreesToTarget.ToString("F2"));
             targetNb++;
@@ -172,6 +182,49 @@ public class Task3Manager : MonoBehaviour
         degreesToTarget = Math.Abs(correctRotationToTarget - gameMngr.playerRot[0]);
     }
 
+    /** SAVE DATA TO EXTERNAL FILES **/
+    private void StartSavingData()
+    {
+        SetFileName();
+        sw = File.AppendText(gameMngr.filePath + fileName);
+        sw.WriteLine(HeadersConstructor()); //Add Headers to the file
+    }
+
+    private void SetFileName()
+    {
+        string participantID = "0";
+        string sessionSummaryText = "ID" + participantID + fileNameDelimiter + "TSK" + gameMngr.taskNb;
+        dateTime = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        fileName = dateTime + fileNameDelimiter + sessionSummaryText + ".csv";
+
+    }
+
+    private string HeadersConstructor()
+    {
+        string sessionHeader = "dateTime" + delimiter + "time" + delimiter + "participantID" + delimiter + "task";
+        string trialHeader = "trialNb" + delimiter + "targetNb" + delimiter + "targetLocationIndex" + delimiter + "targetLocation";
+        string playerHeader = "playerRotation" + "startRotation" + delimiter + "correctRotationToTarget" + delimiter + "degreesToTarget" + delimiter + "distanceToTarget";
+        string calculationsHeader = "trialsDegreeToTarget" + delimiter + "totalDegreesToTarget" + delimiter + "avgDegreestToTarget";
+
+        return sessionHeader + delimiter + trialHeader + delimiter + playerHeader + delimiter + calculationsHeader;
+    }
+
+    private void SaveData()
+    {
+        string sessionData = dateTime + delimiter + gameMngr.taskTime.ToString(@"mm\:ss") + delimiter + gameMngr.participantID + delimiter + gameMngr.taskNb;
+        string trialData = "" + trialNb + delimiter + targetNb + delimiter + targetLocationIndex + delimiter + targetLocationName;
+        string playerData = gameMngr.playerRot[0].ToString("F2") + "starRotation" + delimiter + correctRotationToTarget + delimiter + degreesToTarget + delimiter + distanceToTarget;
+        string calculationsData = "" + degreesToTarget + delimiter + totalDegreesToTarget + delimiter + avgDegreesToTarget;
+
+        sw.WriteLine(sessionData + delimiter + trialData + delimiter + playerData + delimiter + calculationsData);
+    }
+
+    public void StopSavingData()
+    {
+        sw.Close();
+    }
+
+    /** DEBUG USER INTERFACE **/
     private void UpdateUI()
     {
         trialTxt.text = "Trial: " + trialNb + " / " + maxTrial;

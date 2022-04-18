@@ -1,0 +1,9 @@
+dateTime,time,participantID,task,trialNb,targetNb,targetLocationIndex,targetLocation,playerRotationstartRotation,correctRotationToTarget,degreesToTarget,distanceToTarget,trialsDegreeToTarget,totalDegreesToTarget,avgDegreestToTarget
+20220418_202526,00:06,needed,3,1,1,,0,la banque,143.05starRotation,0,143.05,95.75991,143.05,0,0
+20220418_202526,00:08,needed,3,1,2,,1,l' hôpital,242.71starRotation,307.4417,64.6996,91.96616,64.6996,164.3917,164.3917
+20220418_202526,00:13,needed,3,1,3,,2,le garage,112.66starRotation,234.9416,122.8528,81.32833,122.8528,172.1641,172.1641
+20220418_202526,00:17,needed,3,1,4,,3,le supermaché,182.15starRotation,129.6588,52.49127,42.08623,52.49127,189.1599,189.1599
+20220418_202526,00:24,needed,3,1,5,,4,le fleuriste,359.45starRotation,53.56269,305.887,25.58048,305.887,317.7471,317.7471
+20220418_202526,00:34,needed,3,1,6,,5,la station d'essence,24.05starRotation,358.2091,334.1593,75.00265,334.1593,318.9878,318.9878
+20220418_202526,00:42,needed,3,2,1,,3,le supermaché,126.85starRotation,358.2091,231.36,37.6937,231.36,318.9878,318.9878
+20220418_202526,00:46,needed,3,2,2,,2,le garage,98.15starRotation,69.82522,28.32486,74.13494,28.32486,376.0123,188.0062

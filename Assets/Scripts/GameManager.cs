@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     public float taskStartTime;
     public float endTime;
     private TimeSpan totalTime;
-    private TimeSpan taskTime;
+    public TimeSpan taskTime;
 
     public bool sessionStarted;
     public bool sessionPaused;
@@ -54,6 +55,10 @@ public class GameManager : MonoBehaviour
     //Player Data
     public List<float> playerPos;
     public List<float> playerRot;
+
+    //Save Data
+    public string filePath;
+    public string participantID;
     
     
 
@@ -88,6 +93,16 @@ public class GameManager : MonoBehaviour
         }
 
         OpenMenu();
+
+        //Save data
+        filePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/Data/Export/"); //For macOS, Linux
+        if (!System.IO.Directory.Exists(filePath))    //if save directory does not exist, create it
+        {
+            Debug.Log("Create " + filePath + " directory");
+            System.IO.Directory.CreateDirectory(filePath);
+        }
+        else
+            Debug.Log(filePath + " exists");
     }
 
     private void Update()
@@ -172,8 +187,10 @@ public class GameManager : MonoBehaviour
         
         if (!taskStarted)   //if no task has started, start task
         {
-            Debug.Log("Game Manager - StartTask()");
+            participantID = "needed";
+    Debug.Log("Game Manager - StartTask()");
             taskStarted = true;
+            taskEnded = false;
             taskStartTime = Time.time;
             taskPaused = true;
             visor.SetActive(true);

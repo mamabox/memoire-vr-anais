@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using System;
+using System.IO;
 
 public class Task2Manager : MonoBehaviour
 {
@@ -50,6 +51,16 @@ public class Task2Manager : MonoBehaviour
     private float rotationError;    // Absolute value of difference between the correct rotation and the validated rotation
     private float totalDegreesToTarget;    // Sum of rotation error for all trials
     private float avgDegreesToTarget; // Avg rotation error, updated after each trial
+
+
+
+    //SaveData
+    private string dateTime;
+    private StreamWriter sw;
+    private string fileName;
+    private char fileNameDelimiter = '-';
+    private char delimiter = ',';
+    private string difficulty;
 
     private void Awake()
     {
@@ -102,6 +113,7 @@ public class Task2Manager : MonoBehaviour
         task2UI.SetActive(true);
         dialogBox.OpenDialogBox(gameMngr.taskData.task2Data.instructions.start, "trial");
         playerCtrlr.player.GetComponent<FirstPersonMovement>().freezeMovement = true;
+        StartSavingData();
     }
 
     public void EndTask()
@@ -120,6 +132,7 @@ public class Task2Manager : MonoBehaviour
 
 
         gameMngr.visor.SetActive(false);
+        StopSavingData();
     }
 
     public void StartTrial()
@@ -140,6 +153,7 @@ public class Task2Manager : MonoBehaviour
             //targetNb = 1; //Set the target object to the first POI
             startHotspot = allStartHotspots[trialNb - 1];
             playerCtrlr.GotoHotspot(startHotspot);
+            difficulty = gameMngr.taskData.task2Data.task2Trials[trialNb - 1].difficulty;
 
             SetTargetObj();
             CalculateDegreesToTarget();
@@ -179,6 +193,7 @@ public class Task2Manager : MonoBehaviour
         Debug.Log("On Validation");
 
         // Save trial data
+        SaveData();
         totalDegreesToTarget += degreesToTarget;    //Sum
         avgDegreesToTarget = totalDegreesToTarget / trialNb;
         savedTrials.Add(degreesToTarget);
@@ -202,14 +217,51 @@ public class Task2Manager : MonoBehaviour
 
     }
 
+
+    private void StartSavingData()
+    {
+        SetFileName();
+        sw = File.AppendText(gameMngr.filePath + fileName);
+        sw.WriteLine(HeadersConstructor()); //Add Headers to the file
+    }
+
+    private void SetFileName()
+    {
+        string participantID = "0";
+        string sessionSummaryText = "ID" + participantID + fileNameDelimiter + "TSK" + gameMngr.taskNb;
+        dateTime = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        fileName = dateTime + fileNameDelimiter + sessionSummaryText + ".csv";
+
+    }
+
+    private string HeadersConstructor()
+    {
+        string sessionHeader = "dateTime" + delimiter + "time" + delimiter + "participantID" + delimiter + "task";
+        string trialHeader = "trialNb" + delimiter + "difficulty" + "startLocationIndex" + delimiter + "startLocation" + delimiter + "targetLocationIndex" + delimiter + "targetLocation";
+        string playerHeader = "playerRotation" + delimiter +  "startRotation" + delimiter + "correctRotationToTarget" + delimiter + "degreesToTarget" + delimiter + "distanceToTarget";
+        string calculationsHeader = "trialsDegreeToTarget" + delimiter + "totalDegreesToTarget" + delimiter + "avgDegreestToTarget";
+
+        return sessionHeader + delimiter + trialHeader + delimiter + playerHeader + delimiter + calculationsHeader;
+    }
+
     private void SaveData()
     {
+        string sessionData = dateTime + delimiter + gameMngr.taskTime.ToString(@"mm\:ss") +  delimiter + gameMngr.participantID + delimiter + gameMngr.taskNb;
+        string trialData = ""+ trialNb + delimiter + difficulty +  startLocationIndex + delimiter + startLocationName + delimiter + targetLocationIndex + delimiter + targetLocationName;
+        string playerData = gameMngr.playerRot[0].ToString("F2") + delimiter + "starRotation" + delimiter + correctRotationToTarget + delimiter + degreesToTarget + delimiter + distanceToTarget;
+        string calculationsData = "" + degreesToTarget + delimiter + totalDegreesToTarget + delimiter + avgDegreesToTarget;
 
+        sw.WriteLine(sessionData + delimiter  + trialData + delimiter + playerData + delimiter + calculationsData);
+    }
+
+    public void StopSavingData()
+    {
+        sw.Close();
     }
 
     private void UpdateUI()
     {
-        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial + " (" + gameMngr.taskData.task2Data.task2Trials[trialNb-1].difficulty +")";
+        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial + " (" + difficulty +")";
         startTargetTxt.text = "Start: "  + startLocationName + " - Target: " + targetLocationName;
         playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
         distanceToTargetTxt.text = "Distance to target: " + distanceToTarget.ToString("F2");
@@ -218,4 +270,5 @@ public class Task2Manager : MonoBehaviour
         avgDegreesToTargetTxt.text = "Degrees to target (avg): " + avgDegreesToTarget.ToString("F2");
 
     }
+
 }

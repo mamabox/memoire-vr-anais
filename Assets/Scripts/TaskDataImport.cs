@@ -21,7 +21,7 @@ public class TaskDataImport : MonoBehaviour
 
         gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
         //taskManager = gameManager.GetComponent<SequenceManager>();
-        importPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/Data/");
+        importPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/Data/Import/");
         taskDataFile = importPath + "TaskData.json";
 
         totalTaskNb = 3;

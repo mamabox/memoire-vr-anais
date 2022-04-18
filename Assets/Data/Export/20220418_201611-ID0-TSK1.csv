@@ -1,0 +1,8 @@
+dateTime,duration,participantID,task,trialNb,startLocation,targetNb,targetLocationIndex,targetLocation,playerRotation,startRotation,correctRotationToTarget,degreesToTarget,distanceToTarget,trialsDegreeToTarget
+20220418_201611,00:06,needed,1,1,Nord,1,0,la banque,182.60,starRotation,276.9956,94.39561,76.0806,94.39561
+20220418_201611,00:08,needed,1,1,Nord,2,1,l' hôpital,184.70,starRotation,219.6013,34.90218,116.3604,34.90218
+20220418_201611,00:11,needed,1,1,Nord,3,2,le garage,180.60,starRotation,137.215,43.38504,111.4281,43.38504
+20220418_201611,00:13,needed,1,1,Nord,4,3,le supermaché,179.70,starRotation,90.60058,88.99946,49.70891,88.99946
+20220418_201611,00:16,needed,1,1,Nord,5,4,le fleuriste,244.45,starRotation,49.36818,195.0819,27.25913,195.0819
+20220418_201611,00:18,needed,1,1,Nord,6,5,la station d'essence,260.36,starRotation,61.59469,198.7722,117.0266,198.7722
+20220418_201611,00:21,needed,1,2,Est,1,3,le supermaché,322.99,starRotation,310.3245,12.66995,31.99724,12.66995

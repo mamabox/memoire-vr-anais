@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using TMPro;
 using System;
+using System.IO;
 
 /* 4 trials: start at N,E, S, W */
 
@@ -49,6 +50,13 @@ public class Task1Manager : MonoBehaviour
 
     private List<Hotspot> routeNObj;
 
+    //SaveData
+    private string dateTime;
+    private StreamWriter sw;
+    private string fileName;
+    private char fileNameDelimiter = '-';
+    private char delimiter = ',';
+
     private void Awake()
     {
         gameMngr = FindObjectOfType<GameManager>().GetComponent<GameManager>();
@@ -81,6 +89,7 @@ public class Task1Manager : MonoBehaviour
         //gameMngr.taskPaused = true;
         //StartTrial();
         playerCtrlr.calculatingRotation = true;
+        StartSavingData();
 
     }
 
@@ -97,17 +106,7 @@ public class Task1Manager : MonoBehaviour
 
     }
 
-    private void UpdateUI()
-    {
-        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial + ": "+ routeName;
-        targetTxt.text = "Target: " + targetNb + " / " + maxTargetObj + ": " + targetLocationName;
-        //playerRotationTxt.text = "temp";
-        playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
-        distanceToTargetTxt.text = "Distance to target: " + distanceToTarget.ToString("F2");
-        angleToTargetTxt.text = "Degrees to target: " + degreesToTarget.ToString("F2");
-        savedTrialsTxt.text = "Recorded degrees to target: "+ String.Join(",", savedTrialsUI);
-        
-    }
+
 
     // Configure settings for this task - called once when program is launched
     public void SetupTask()
@@ -127,10 +126,6 @@ public class Task1Manager : MonoBehaviour
         //task2UI.SetActive(false);
         //task3UI.SetActive(false);
         //gameMngr.dialogBox.SetActive(true);
-
-    }
-    public void SaveData()
-    {
 
     }
 
@@ -170,7 +165,7 @@ public class Task1Manager : MonoBehaviour
             instructions = gameMngr.taskData.task1Data.instructions.attempts[0] + gameMngr.taskData.task1Data.instructions.attempts[1] + " " + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[2];
             image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
             dialogBox.OpenDialogBoxImg(instructions, image, "none");
-
+            
 
         }
         else // notrials left
@@ -189,6 +184,13 @@ public class Task1Manager : MonoBehaviour
             routeMngr.task1Routes[x].SetActive(true);
     }
 
+    private void HideAllRoutes()
+    {
+        for (int x = 0; x < maxTrial; x++)  // for each route
+                    routeMngr.task1Routes[x].SetActive(false);
+           
+    }
+
     void SetTargetObj()
     {
 
@@ -200,8 +202,6 @@ public class Task1Manager : MonoBehaviour
         targetLocation = gameMngr.POI[targetLocationIndex];
         
         targetLocationName = gameMngr.taskData.task1Data.locations[targetLocationIndex].pronoun + " " + gameMngr.taskData.task1Data.locations[targetLocationIndex].name;
-
-        
 
     }
 
@@ -222,6 +222,7 @@ public class Task1Manager : MonoBehaviour
         playerCtrlr.calculatingRotation = false;
         dialogBox.OpenDialogBox(gameMngr.taskData.task1Data.instructions.end, "menu");
         task1UI.SetActive(false);
+        HideAllRoutes();
         //gameMngr.EndTask();
         Debug.Log("End of task 1");
 
@@ -229,6 +230,7 @@ public class Task1Manager : MonoBehaviour
         gameMngr.taskStarted = false;
         gameMngr.taskEnded = true;
         gameMngr.taskNb = 0;
+        StopSavingData();
         //Cursor.lockState = CursorLockMode.None;
 
 
@@ -240,22 +242,77 @@ public class Task1Manager : MonoBehaviour
         string instructions;
         string image;
 
+        SaveData();
         //Debug.Log("Inside Task1 OnValidation()");
         if (targetNb < maxTargetObj) // if there are target objects left in this trial
             {
             CalculateDegreeToTarget();
-                savedTrials.Add(degreesToTarget);
+            
+            savedTrials.Add(degreesToTarget);
             savedTrialsUI.Add(degreesToTarget.ToString("F2"));
                 targetNb++;
                 SetTargetObj();
             instructions = gameMngr.taskData.task1Data.instructions.attempts[1] + " " + targetLocationName + gameMngr.taskData.task1Data.instructions.attempts[2];
             image = gameMngr.taskData.task1Data.locations[targetLocationIndex].filename;
             dialogBox.OpenDialogBoxImg(instructions, image, "none");
+           
         }
             else
             {
+
                 StartTrial(); // start the next trial
             }
         
+    }
+
+    private void StartSavingData()
+    {
+        SetFileName();
+        sw = File.AppendText(gameMngr.filePath + fileName);
+        sw.WriteLine(HeadersConstructor()); //Add Headers to the file
+    }
+
+    private void SetFileName()
+    {
+        string participantID = "0";
+        string sessionSummaryText = "ID" + participantID + fileNameDelimiter + "TSK" + gameMngr.taskNb;
+        dateTime = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        fileName = dateTime + fileNameDelimiter + sessionSummaryText + ".csv";
+
+    }
+
+    private string HeadersConstructor()
+    {
+        string sessionHeader = "dateTime" + delimiter + "time" + delimiter + "participantID" + delimiter + "task";
+        string trialHeader = "trialNb" + delimiter + "startLocation" + delimiter + "targetNb" + delimiter + "targetLocationIndex" + delimiter + "targetLocation";
+        string playerHeader = "playerRotation" + delimiter + "startRotation" + delimiter + "correctRotationToTarget" + delimiter + "degreesToTarget" + delimiter + "distanceToTarget";
+
+        return sessionHeader + delimiter + trialHeader + delimiter + playerHeader;
+    }
+
+    private void SaveData()
+    {
+        string sessionData = dateTime + delimiter + gameMngr.taskTime.ToString(@"mm\:ss") + delimiter + gameMngr.participantID + delimiter + gameMngr.taskNb;
+        string trialData = "" + trialNb + delimiter + startHotspot.GetComponent<Hotspot>().desc + delimiter + targetNb + delimiter + targetLocationIndex + delimiter + targetLocationName;
+        string playerData = gameMngr.playerRot[0].ToString("F2") + delimiter + "starRotation" + delimiter + correctRotationToTarget + delimiter + degreesToTarget + delimiter + distanceToTarget;
+
+        sw.WriteLine(sessionData + delimiter + trialData + delimiter + playerData);
+    }
+
+    public void StopSavingData()
+    {
+        sw.Close();
+    }
+
+    private void UpdateUI()
+    {
+        trialTxt.text = "Trial: " + trialNb + " / " + maxTrial + ": " + routeName;
+        targetTxt.text = "Target: " + targetNb + " / " + maxTargetObj + ": " + targetLocationName;
+        //playerRotationTxt.text = "temp";
+        playerRotationTxt.text = "Player rot: " + gameMngr.playerRot[0].ToString("F2");
+        distanceToTargetTxt.text = "Distance to target: " + distanceToTarget.ToString("F2");
+        angleToTargetTxt.text = "Degrees to target: " + degreesToTarget.ToString("F2");
+        savedTrialsTxt.text = "Recorded degrees to target: " + String.Join(",", savedTrialsUI);
+
     }
 }
